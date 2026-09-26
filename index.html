@@ -1,1255 +1,434 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CyberShield — aprenda a reconhecer ameaças digitais e proteger suas contas de forma simples e divertida.">
-  <meta name="theme-color" content="#05080d">
-  <title>CyberShield — Hacker do Bem</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg: #05080d;
-      --bg2: #071019;
-      --panel: rgba(10, 19, 29, .88);
-      --text: #f5f8fb;
-      --muted: #9baabd;
-      --green: #45ff9a;
-      --cyan: #32d9ff;
-      --red: #ff5f76;
-      --yellow: #ffd166;
-      --border: rgba(69, 255, 154, .18);
-      --shadow: 0 24px 70px rgba(0,0,0,.38);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: "Inter", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 15% 10%, rgba(50,217,255,.09), transparent 28%),
-        radial-gradient(circle at 85% 25%, rgba(69,255,154,.07), transparent 30%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
-      min-height: 100vh;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* MATRIX */
-    #matrix {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-      pointer-events: none;
-      opacity: .105;
-    }
-
-    .matrix-vignette {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background: radial-gradient(circle at center, transparent 0%, rgba(5,8,13,.15) 55%, rgba(5,8,13,.78) 100%);
-    }
-
-    .container {
-      width: min(1120px, calc(100% - 36px));
-      margin: auto;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(18px);
-      background: rgba(5, 8, 13, .78);
-      border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-
-    .nav {
-      min-height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      font-family: "Space Grotesk", sans-serif;
-      font-weight: 700;
-      font-size: 1.15rem;
-      letter-spacing: -.02em;
-    }
-
-    .logo-mark {
-      width: 38px;
-      height: 38px;
-      display: grid;
-      place-items: center;
-      border-radius: 12px;
-      color: #00130b;
-      background: linear-gradient(135deg, var(--green), var(--cyan));
-      box-shadow: 0 0 28px rgba(69,255,154,.25);
-    }
-
-    nav { display: flex; gap: 8px; }
-
-    nav a {
-      color: var(--muted);
-      padding: 9px 13px;
-      border-radius: 10px;
-      font-size: .9rem;
-      transition: .25s ease;
-    }
-
-    nav a:hover {
-      color: var(--text);
-      background: rgba(255,255,255,.06);
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding: 105px 0 90px;
-      text-align: center;
-    }
-
-    .grid-bg {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      opacity: .22;
-      background-image:
-        linear-gradient(rgba(69,255,154,.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(69,255,154,.08) 1px, transparent 1px);
-      background-size: 45px 45px;
-      mask-image: linear-gradient(to bottom, black, transparent 85%);
-    }
-
-    .hero-content { position: relative; z-index: 1; }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--green);
-      background: rgba(69,255,154,.07);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 7px 13px;
-      font-size: .82rem;
-      font-weight: 600;
-      margin-bottom: 22px;
-    }
-
-    .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 12px var(--green);
-    }
-
-    h1 {
-      font-family: "Space Grotesk", sans-serif;
-      font-size: clamp(3rem, 8vw, 6.6rem);
-      line-height: .94;
-      letter-spacing: -.065em;
-      max-width: 950px;
-      margin: auto;
-    }
-
-    .gradient {
-      background: linear-gradient(90deg, #fff, var(--cyan), var(--green));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .hero p {
-      max-width: 680px;
-      margin: 25px auto 0;
-      color: var(--muted);
-      font-size: clamp(1rem, 2vw, 1.15rem);
-    }
-
-    .hero-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 32px;
-    }
-
-    .btn {
-      border: 0;
-      cursor: pointer;
-      border-radius: 12px;
-      padding: 13px 19px;
-      font: inherit;
-      font-weight: 700;
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-    }
-
-    .btn:hover { transform: translateY(-2px); }
-
-    .btn-primary {
-      color: #00130b;
-      background: linear-gradient(135deg, var(--green), var(--cyan));
-      box-shadow: 0 10px 35px rgba(50,217,255,.14);
-    }
-
-    .btn-secondary {
-      color: var(--text);
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.09);
-    }
-
-    section { padding: 70px 0; }
-
-    .section-title { margin-bottom: 28px; }
-
-    .eyebrow {
-      color: var(--green);
-      font-size: .78rem;
-      font-weight: 800;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    h2 {
-      font-family: "Space Grotesk", sans-serif;
-      font-size: clamp(2rem, 5vw, 3.3rem);
-      line-height: 1;
-      letter-spacing: -.045em;
-    }
-
-    .villains {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px;
-    }
-
-    .card {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(145deg, rgba(16,27,39,.91), rgba(8,13,20,.95));
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: var(--shadow);
-      transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease;
-      cursor: default;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      width: 180px;
-      height: 180px;
-      right: -80px;
-      top: -80px;
-      background: var(--green);
-      opacity: .07;
-      border-radius: 50%;
-      filter: blur(5px);
-    }
-
-    .card:hover {
-      transform: translateY(-7px);
-      border-color: rgba(69,255,154,.48);
-      box-shadow: 0 28px 80px rgba(0,0,0,.5), 0 0 35px rgba(69,255,154,.06);
-    }
-
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 15px;
-      margin-bottom: 22px;
-    }
-
-    .villain-icon {
-      width: 60px;
-      height: 60px;
-      display: grid;
-      place-items: center;
-      border-radius: 17px;
-      font-size: 1.8rem;
-      background: rgba(69,255,154,.08);
-      border: 1px solid rgba(69,255,154,.17);
-    }
-
-    .level {
-      font-size: .72rem;
-      color: var(--yellow);
-      border: 1px solid rgba(255,209,102,.22);
-      background: rgba(255,209,102,.06);
-      border-radius: 999px;
-      padding: 5px 9px;
-      white-space: nowrap;
-    }
-
-    .card h3 {
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 1.65rem;
-      margin-bottom: 8px;
-    }
-
-    .subtitle {
-      color: var(--cyan);
-      font-weight: 700;
-      font-size: .88rem;
-      margin-bottom: 18px;
-    }
-
-    .card p { color: var(--muted); }
-
-    .info-list {
-      list-style: none;
-      display: grid;
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .info-list li {
-      display: grid;
-      grid-template-columns: 26px 1fr;
-      gap: 8px;
-      align-items: start;
-      color: #cbd5df;
-      font-size: .93rem;
-    }
-
-    .info-list strong { color: var(--text); }
-
-    .tip {
-      margin-top: 23px;
-      padding: 15px;
-      border-radius: 14px;
-      background: rgba(69,255,154,.055);
-      border: 1px solid rgba(69,255,154,.12);
-    }
-
-    .tip-title {
-      color: var(--green);
-      font-size: .8rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      margin-bottom: 5px;
-    }
-
-    .phishing-check {
-      margin-top: 24px;
-      padding: 18px;
-      border-radius: 17px;
-      background: rgba(50,217,255,.05);
-      border: 1px solid rgba(50,217,255,.13);
-    }
-
-    .phishing-check button { width: 100%; margin-top: 12px; }
-
-    .result {
-      display: none;
-      margin-top: 12px;
-      padding: 12px;
-      border-radius: 11px;
-      color: #d9fff0;
-      background: rgba(69,255,154,.08);
-      border: 1px solid rgba(69,255,154,.14);
-      font-size: .88rem;
-    }
-
-    /* ADWARE POPUPS */
-    .adware-card { cursor: pointer; }
-
-    .adware-card:hover .villain-icon {
-      animation: adShake .25s linear 2;
-    }
-
-    @keyframes adShake {
-      25% { transform: rotate(-7deg); }
-      75% { transform: rotate(7deg); }
-    }
-
-    #adPopupLayer {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      pointer-events: none;
-    }
-
-    .fake-ad {
-      position: absolute;
-      width: min(285px, calc(100vw - 32px));
-      background: #fff;
-      color: #171717;
-      border: 4px solid #111;
-      border-radius: 12px;
-      box-shadow: 0 18px 60px rgba(0,0,0,.55);
-      padding: 16px;
-      pointer-events: auto;
-      animation: popupIn .25s ease both;
-      transform-origin: center;
-    }
-
-    .fake-ad h4 {
-      color: #e22;
-      font-family: Arial, sans-serif;
-      font-size: 1.1rem;
-      margin-bottom: 5px;
-    }
-
-    .fake-ad p {
-      color: #333;
-      font: 700 .86rem/1.35 Arial, sans-serif;
-      margin-bottom: 10px;
-    }
-
-    .fake-ad button {
-      border: 0;
-      cursor: pointer;
-      padding: 8px 11px;
-      border-radius: 7px;
-      background: #ffd900;
-      color: #111;
-      font-weight: 900;
-      margin-right: 6px;
-    }
-
-    .fake-ad .close-mini {
-      background: #eee;
-      font-weight: 700;
-    }
-
-    .fake-ad::after {
-      content: "ANÚNCIO FALSO • SIMULAÇÃO";
-      display: block;
-      margin-top: 9px;
-      font: 600 .62rem Arial, sans-serif;
-      color: #888;
-    }
-
-    @keyframes popupIn {
-      from { opacity: 0; transform: scale(.7) rotate(-4deg); }
-      to { opacity: 1; transform: scale(1) rotate(0); }
-    }
-
-    .close-ads {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 110;
-      display: none;
-      border: 0;
-      cursor: pointer;
-      color: #00130b;
-      background: var(--green);
-      border-radius: 999px;
-      padding: 12px 17px;
-      font-weight: 800;
-      box-shadow: 0 12px 30px rgba(0,0,0,.4);
-    }
-
-    /* DEFESA */
-    .howto {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin-top: 26px;
-    }
-
-    .step {
-      padding: 20px;
-      border: 1px solid rgba(255,255,255,.07);
-      background: rgba(255,255,255,.025);
-      border-radius: 16px;
-    }
-
-    .step-number {
-      color: var(--green);
-      font-weight: 800;
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 1.3rem;
-    }
-
-    .step h4 { margin: 7px 0 4px; }
-    .step p { color: var(--muted); font-size: .86rem; }
-
-    /* QUIZ */
-    .quiz-shell {
-      max-width: 900px;
-      margin: auto;
-      padding: 30px;
-      border-radius: 26px;
-      border: 1px solid var(--border);
-      background: linear-gradient(145deg, rgba(13,24,35,.92), rgba(7,13,20,.95));
-      box-shadow: var(--shadow);
-    }
-
-    .quiz-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-
-    .quiz-progress {
-      width: 180px;
-      max-width: 38%;
-      height: 8px;
-      border-radius: 999px;
-      overflow: hidden;
-      background: rgba(255,255,255,.08);
-    }
-
-    .quiz-progress span {
-      display: block;
-      width: 0;
-      height: 100%;
-      background: linear-gradient(90deg, var(--cyan), var(--green));
-      transition: width .35s ease;
-    }
-
-    .question {
-      margin-bottom: 25px;
-    }
-
-    .question-number {
-      color: var(--cyan);
-      font-weight: 800;
-      font-size: .8rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-    }
-
-    .question h3 {
-      font-family: "Space Grotesk", sans-serif;
-      font-size: clamp(1.3rem, 3vw, 1.7rem);
-      margin-top: 5px;
-    }
-
-    .answers {
-      display: grid;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .answer {
-      width: 100%;
-      text-align: left;
-      color: #dbe5ed;
-      background: rgba(255,255,255,.035);
-      border: 1px solid rgba(255,255,255,.09);
-      border-radius: 13px;
-      padding: 14px 15px;
-      font: inherit;
-      cursor: pointer;
-      transition: .2s ease;
-    }
-
-    .answer:hover:not(:disabled) {
-      border-color: rgba(50,217,255,.5);
-      background: rgba(50,217,255,.06);
-      transform: translateX(3px);
-    }
-
-    .answer.correct {
-      border-color: var(--green);
-      background: rgba(69,255,154,.13);
-      color: #caffdf;
-    }
-
-    .answer.wrong {
-      border-color: var(--red);
-      background: rgba(255,95,118,.12);
-      color: #ffd4da;
-    }
-
-    .answer:disabled { cursor: default; }
-
-    .quiz-feedback {
-      min-height: 25px;
-      font-weight: 800;
-      margin-top: 12px;
-    }
-
-    .quiz-feedback.good { color: var(--green); }
-    .quiz-feedback.bad { color: var(--red); }
-
-    .quiz-result {
-      display: none;
-      text-align: center;
-      padding: 30px 15px 8px;
-    }
-
-    .medal {
-      width: 100px;
-      height: 100px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 16px;
-      border-radius: 50%;
-      font-size: 3rem;
-      background: radial-gradient(circle, rgba(69,255,154,.18), rgba(69,255,154,.03));
-      border: 1px solid rgba(69,255,154,.28);
-      box-shadow: 0 0 40px rgba(69,255,154,.12);
-    }
-
-    .score {
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 2.1rem;
-      margin: 8px 0;
-    }
-
-    .rank {
-      color: var(--green);
-      font-size: 1.35rem;
-      font-weight: 800;
-    }
-
-    .cta {
-      text-align: center;
-      padding: 65px 25px;
-      border-radius: 26px;
-      border: 1px solid var(--border);
-      background:
-        radial-gradient(circle at 50% 0%, rgba(69,255,154,.12), transparent 50%),
-        rgba(10,17,25,.8);
-      margin-top: 25px;
-    }
-
-    .cta p {
-      color: var(--muted);
-      max-width: 600px;
-      margin: 13px auto 24px;
-    }
-
-    .typing {
-      display: inline-block;
-      border-right: 2px solid var(--green);
-      animation: blink .8s step-end infinite;
-    }
-
-    @keyframes blink { 50% { border-color: transparent; } }
-
-    footer {
-      margin-top: 40px;
-      padding: 30px 0 40px;
-      border-top: 1px solid rgba(255,255,255,.06);
-      color: var(--muted);
-      text-align: center;
-      font-size: .85rem;
-    }
-
-    .quiz-flash {
-      animation: flash .45s ease;
-    }
-
-    @keyframes flash {
-      50% { box-shadow: 0 0 45px rgba(69,255,154,.22); }
-    }
-
-    @media (max-width: 780px) {
-      .nav { min-height: 64px; }
-      nav a { padding: 7px 8px; font-size: .78rem; }
-      .hero { padding: 80px 0 65px; }
-      .villains, .howto { grid-template-columns: 1fr; }
-      .card { padding: 22px; }
-      section { padding: 55px 0; }
-      .quiz-shell { padding: 22px; }
-      .quiz-head { align-items: flex-start; }
-      .quiz-progress { width: 120px; }
-    }
-
-    @media (max-width: 480px) {
-      .container { width: min(100% - 24px, 1120px); }
-      .logo span:last-child { display: none; }
-      nav { gap: 2px; }
-      nav a { font-size: .72rem; padding: 6px; }
-      h1 { font-size: 3.25rem; }
-      .hero p { font-size: .94rem; }
-      .card { border-radius: 19px; }
-      .fake-ad { width: min(260px, calc(100vw - 28px)); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after {
-        animation-duration: .001ms !important;
-        transition-duration: .001ms !important;
-      }
-    }
-
-/* ===== UPGRADE SUPREMO ===== */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:-25px 0 30px}.stat{padding:17px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.025);border-radius:17px;text-align:center}.stat strong{display:block;font-family:"Space Grotesk",sans-serif;font-size:1.65rem;color:var(--green)}.stat span{font-size:.76rem;color:var(--muted)}
-.threat-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:22px}.search{flex:1 1 280px;position:relative}.search input{width:100%;color:white;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);outline:none;border-radius:13px;padding:13px 15px 13px 42px}.search input:focus{border-color:rgba(69,255,154,.45);box-shadow:0 0 0 3px rgba(69,255,154,.06)}.search span{position:absolute;left:14px;top:10px}.filter-btn{color:var(--muted);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:11px 12px;border-radius:11px;cursor:pointer;transition:.2s}.filter-btn.active,.filter-btn:hover{color:#00130b;background:var(--green);border-color:var(--green)}.hidden-card{display:none!important}
-.anim-worm .villain-icon{animation:wormHop 2.2s ease-in-out infinite}@keyframes wormHop{0%,100%{transform:translateX(0)}25%{transform:translateX(5px) rotate(4deg)}50%{transform:translateX(-3px)}75%{transform:translateX(7px) rotate(-4deg)}}
-.anim-keylogger .villain-icon::after{content:"_";color:var(--green);font-weight:900;animation:cursorBlink .8s infinite}@keyframes cursorBlink{50%{opacity:0}}
-.anim-rootkit .villain-icon{position:relative}.anim-rootkit .villain-icon::after{content:"";position:absolute;left:8px;right:8px;height:2px;background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:scanLine 1.6s linear infinite}@keyframes scanLine{0%{top:9px}100%{top:49px}}
-.anim-scare .villain-icon{animation:alarm 1.6s ease-in-out infinite}@keyframes alarm{0%,100%{box-shadow:0 0 0 rgba(255,95,118,0)}50%{box-shadow:0 0 24px rgba(255,95,118,.25);filter:saturate(1.35)}}
-.anim-bot .villain-icon{animation:signal 1.8s ease-in-out infinite}@keyframes signal{0%,100%{box-shadow:0 0 0 rgba(50,217,255,0)}50%{box-shadow:0 0 24px rgba(50,217,255,.25)}}
-.anim-cryptojacker .villain-icon{animation:cpu 1.1s ease-in-out infinite}@keyframes cpu{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px) scale(1.03)}}
-.anim-wiper:hover .villain-icon{animation:glitch .2s steps(2) infinite}@keyframes glitch{50%{transform:translate(3px,-2px) skewX(8deg)}}
-.anim-dropper .villain-icon{animation:drop 1.7s ease-in-out infinite}@keyframes drop{0%,100%{transform:translateY(-4px)}50%{transform:translateY(5px)}}
-.anim-hijacker .villain-icon{animation:redirect 1.5s ease-in-out infinite}@keyframes redirect{0%,100%{transform:translateX(0)}50%{transform:translateX(7px)}}
-.anim-stealer .villain-icon{animation:steal 1.7s ease-in-out infinite}@keyframes steal{0%,100%{transform:scale(1)}50%{transform:scale(1.08) rotate(3deg)}}
-.anim-virus .villain-icon{animation:replicate 2s ease-in-out infinite}@keyframes replicate{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
-.meter{margin-top:16px;padding:12px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06)}.meter-top{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted);margin-bottom:7px}.meter-bar{height:7px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}.meter-bar span{display:block;height:100%;width:82%;background:linear-gradient(90deg,var(--cyan),var(--green));animation:meterPulse 1.3s ease-in-out infinite alternate}@keyframes meterPulse{to{width:94%}}
-.difficulty-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}.difficulty{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);color:#dce5ec;border-radius:14px;padding:14px;text-align:left;cursor:pointer;transition:.22s}.difficulty:hover{transform:translateY(-2px);border-color:rgba(69,255,154,.3)}.difficulty.active{background:rgba(69,255,154,.09);border-color:var(--green);box-shadow:0 0 25px rgba(69,255,154,.06)}.difficulty strong{display:block;font-family:"Space Grotesk",sans-serif}.difficulty small{display:block;color:var(--muted);margin-top:3px}.quiz-config{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:13px 0 21px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:23px}.quiz-config span{color:var(--muted);font-size:.83rem}.quiz-config select{color:white;background:#0c1620;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px 10px;outline:none}.streak{font-size:.8rem;color:var(--yellow);font-weight:800}.quiz-flash{animation:quizFlash .45s ease}@keyframes quizFlash{50%{box-shadow:0 0 45px rgba(69,255,154,.24)}}
-@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.difficulty-grid{grid-template-columns:1fr}}@media(max-width:480px){.stats{gap:8px}.stat{padding:13px 8px}.stat strong{font-size:1.35rem}}
-
-  
-/* CENTRAL DE RECOMENDAÇÕES */
-.recommendations{margin-top:70px}
-.recommendation-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px}
-.product-card{position:relative;overflow:hidden;padding:28px;border:1px solid rgba(50,217,255,.16);border-radius:22px;background:linear-gradient(145deg,rgba(14,25,36,.94),rgba(7,13,20,.94));box-shadow:0 18px 55px rgba(0,0,0,.25);transition:transform .28s,box-shadow .28s,border-color .28s}
-.product-card:hover{transform:translateY(-7px);border-color:rgba(50,217,255,.48);box-shadow:0 24px 65px rgba(0,180,255,.12)}
-.product-card:before{content:"";position:absolute;inset:-60% 35% auto -30%;height:180px;background:rgba(50,217,255,.12);filter:blur(45px);pointer-events:none}
-.product-icon{font-size:2.5rem;margin-bottom:16px;position:relative}
-.product-card h3{font-family:"Space Grotesk",sans-serif;font-size:1.35rem;margin:0 0 9px;position:relative}
-.product-card p{color:var(--muted);line-height:1.65;min-height:78px;position:relative}
-.product-btn{display:inline-flex;align-items:center;justify-content:center;width:100%;margin-top:14px;padding:13px 16px;border-radius:12px;text-decoration:none;font-weight:800;color:#fff;background:linear-gradient(135deg,#168cff,#32d9ff);box-shadow:0 8px 25px rgba(22,140,255,.22);transition:.2s;position:relative}
-.product-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(22,140,255,.35);filter:brightness(1.08)}
-.product-tag{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.08em;color:#8eeaff;border:1px solid rgba(50,217,255,.2);background:rgba(50,217,255,.07);padding:5px 8px;border-radius:999px;margin-bottom:12px;position:relative}
-@media(max-width:850px){.recommendation-grid{grid-template-columns:1fr}}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CyberLock | Gerador de Senhas Seguras</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #121214;
+            color: #ffffff;
+            font-family: "Courier New", monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+        }
+
+        header {
+            border-left: 3px solid #00e5ff;
+            padding-left: 16px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            color: #ffffff;
+            line-height: 1.3;
+        }
+
+        h1::first-letter {
+            color: #00e5ff;
+        }
+
+        .subtitle {
+            margin-top: 12px;
+            color: #a7a7ad;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .terminal {
+            background: #18181b;
+            border: 1px solid #303036;
+            border-radius: 10px;
+            padding: 24px;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.05);
+        }
+
+        .terminal-bar {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 20px;
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #45454b;
+        }
+
+        .terminal-label {
+            margin-left: 8px;
+            color: #66666d;
+            font-size: 0.75rem;
+        }
+
+        .password-box {
+            min-height: 100px;
+            width: 100%;
+            background: #0d0d0f;
+            border: 1px solid #34343a;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            overflow-wrap: anywhere;
+            transition: 0.2s ease;
+        }
+
+        .password-box.active {
+            border-color: #00e5ff;
+            box-shadow: 0 0 18px rgba(0, 229, 255, 0.12);
+        }
+
+        #password {
+            font-size: clamp(1.1rem, 4vw, 1.7rem);
+            color: #00e5ff;
+            letter-spacing: 1px;
+            word-break: break-all;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .generate-btn {
+            flex: 1;
+            background: #00e5ff;
+            color: #061014;
+            padding: 15px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .generate-btn:hover {
+            background: #62efff;
+            transform: translateY(-1px);
+        }
+
+        .generate-btn:active,
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+
+        .copy-btn {
+            background: #242428;
+            color: #ffffff;
+            border: 1px solid #3b3b41;
+            padding: 15px 18px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            border-color: #00e5ff;
+            color: #00e5ff;
+        }
+
+        .status {
+            min-height: 22px;
+            margin-top: 15px;
+            text-align: center;
+            color: #00e5ff;
+            font-size: 0.8rem;
+        }
+
+        .info {
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid #29292e;
+            color: #707077;
+            font-size: 0.75rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        @media (max-width: 520px) {
+            body {
+                padding: 14px;
+            }
+
+            .terminal {
+                padding: 18px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .copy-btn,
+            .generate-btn {
+                width: 100%;
+            }
+
+            .password-box {
+                min-height: 90px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-  <canvas id="matrix" aria-hidden="true"></canvas>
-  <div class="matrix-vignette" aria-hidden="true"></div>
 
-  <header>
-    <div class="container nav">
-      <a class="logo" href="#inicio" aria-label="CyberShield início">
-        <span class="logo-mark">🛡️</span>
-        <span>CyberShield</span>
-      </a>
+    <main class="container">
 
-      <nav aria-label="Menu principal">
-        <a href="#inicio">Início</a>
-        <a href="#vilões">Vilões</a>
-        <a href="#quiz">Quiz</a>
-      </nav>
-    </div>
-  </header>
+        <header>
+            <h1>🔐 CyberLock | Gerador de Senhas Seguras</h1>
 
-  <main id="inicio">
-    <section class="hero">
-      <div class="grid-bg"></div>
-      <div class="container hero-content">
-        <div class="badge"><span class="dot"></span> CYBERSECURITY • HACKER DO BEM</div>
+            <p class="subtitle">
+                Proteja suas contas de jogos e redes sociais criando senhas
+                impossíveis de serem hackeadas.
+            </p>
+        </header>
 
-        <h1>
-          Conhecimento é a sua
-          <span class="gradient">melhor defesa.</span>
-        </h1>
+        <section class="terminal">
 
-        <p>
-          Aprenda a reconhecer ameaças digitais, evitar golpes e proteger
-          suas contas de um jeito simples, visual e seguro.
-        </p>
-
-        <div class="hero-buttons">
-          <a class="btn btn-primary" href="#vilões">🎮 Enfrentar os vilões</a>
-          <a class="btn btn-secondary" href="#quiz">🧠 Testar meus conhecimentos</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="vilões">
-      <div class="container">
-        <div class="stats">
-          <div class="stat"><strong id="threatCount">19</strong><span>ameaças catalogadas</span></div>
-          <div class="stat"><strong>3</strong><span>níveis de quiz</span></div>
-          <div class="stat"><strong>36+</strong><span>perguntas disponíveis</span></div>
-          <div class="stat"><strong>100%</strong><span>modo educativo</span></div>
-        </div>
-        <div class="section-title">
-          <div class="eyebrow">DATABASE // AMEAÇAS</div>
-          <h2>Conheça os vilões.</h2>
-        </div>
-        <div class="threat-tools">
-          <label class="search"><span>🔎</span><input id="threatSearch" type="search" placeholder="Pesquisar uma ameaça..." aria-label="Pesquisar ameaça"></label>
-          <button class="filter-btn active" data-filter="all">Todos</button>
-          <button class="filter-btn" data-filter="malware">Malware</button>
-          <button class="filter-btn" data-filter="golpe">Golpes</button>
-          <button class="filter-btn" data-filter="espionagem">Espionagem</button>
-        </div>
-        <div class="villains" id="villainGrid">
-
-          <article class="card">
-            <div class="card-top">
-              <div class="villain-icon">🐴</div>
-              <span class="level">AMEAÇA DIGITAL</span>
+            <div class="terminal-bar">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="terminal-label">CYBERLOCK_TERMINAL</span>
             </div>
-            <h3>Cavalo de Troia</h3>
-            <div class="subtitle">TROJAN — O mestre do disfarce</div>
-            <p>Um Trojan tenta parecer um programa, arquivo ou aplicativo legítimo para convencer a pessoa a executá-lo.</p>
-            <ul class="info-list">
-              <li><span>🎭</span><span><strong>Disfarce:</strong> pode se apresentar como aplicativo, arquivo ou programa aparentemente normal.</span></li>
-              <li><span>⚠️</span><span><strong>Perigo:</strong> depois de executado, pode realizar ações maliciosas, dependendo do tipo.</span></li>
-              <li><span>🛡️</span><span><strong>Defesa:</strong> use software de segurança, mantenha o sistema atualizado e baixe programas de fontes confiáveis.</span></li>
-            </ul>
-            <div class="tip">
-              <div class="tip-title">💡 Regra do hacker do bem</div>
-              <p>Se você não sabe de onde veio um arquivo, não precisa abrir só porque ele parece interessante.</p>
+
+            <div class="password-box" id="passwordBox">
+                <span id="password">
+                    Clique no botão para gerar...
+                </span>
             </div>
-          </article>
 
-          <article class="card">
-            <div class="card-top">
-              <div class="villain-icon">🎣</div>
-              <span class="level">ENGENHARIA SOCIAL</span>
+            <div class="actions">
+
+                <button
+                    class="generate-btn"
+                    id="generateBtn">
+                    ⚡ GERAR SENHA FORTE
+                </button>
+
+                <button
+                    class="copy-btn"
+                    id="copyBtn">
+                    📋 Copiar
+                </button>
+
             </div>
-            <h3>Roubo de Senhas</h3>
-            <div class="subtitle">PHISHING — O mestre da enganação</div>
-            <p>Phishing usa mensagens e páginas falsas para tentar convencer alguém a entregar informações como senhas ou códigos.</p>
-            <ul class="info-list">
-              <li><span>🎣</span><span><strong>Isca:</strong> a mensagem pode fingir ser de uma empresa, banco, jogo ou serviço conhecido.</span></li>
-              <li><span>🔎</span><span><strong>Sinal:</strong> confira cuidadosamente o endereço do site antes de inserir qualquer informação.</span></li>
-              <li><span>🛡️</span><span><strong>Defesa:</strong> prefira abrir o serviço pelo aplicativo ou digitando o endereço oficial você mesmo.</span></li>
-            </ul>
-            <div class="phishing-check">
-              <div class="tip-title">🔬 Investigação segura</div>
-              <p>O <strong>VirusTotal</strong> pode ajudar a analisar um endereço ou arquivo usando vários mecanismos de segurança. Mesmo assim, resultados precisam ser interpretados com cuidado.</p>
-              <button class="btn btn-secondary" onclick="showVirusTotalTip()">🔍 Como analisar um link</button>
-              <div id="result" class="result"></div>
+
+            <div class="status" id="status"></div>
+
+            <div class="info">
+                14 caracteres • Maiúsculas • Minúsculas • Números • Símbolos
             </div>
-          </article>
 
-          <article class="card">
-            <div class="card-top">
-              <div class="villain-icon">👁️</div>
-              <span class="level">ACESSO REMOTO</span>
-            </div>
-            <h3>RAT</h3>
-            <div class="subtitle">REMOTE ACCESS TROJAN — O invasor remoto</div>
-            <p>Um RAT é um tipo de malware criado para permitir que um invasor controle ou monitore um dispositivo sem autorização.</p>
-            <ul class="info-list">
-              <li><span>🕵️</span><span><strong>Disfarce:</strong> pode chegar escondido em arquivos, programas ou mensagens maliciosas.</span></li>
-              <li><span>🖥️</span><span><strong>Perigo:</strong> dependendo do malware, pode permitir acesso remoto e coleta de informações.</span></li>
-              <li><span>🛡️</span><span><strong>Defesa:</strong> mantenha o sistema atualizado, use proteção de segurança e evite arquivos de origem desconhecida.</span></li>
-            </ul>
-            <div class="tip">
-              <div class="tip-title">💡 Sinal de alerta</div>
-              <p>Um comportamento estranho no computador merece investigação, especialmente depois da instalação de um programa desconhecido.</p>
-            </div>
-          </article>
+        </section>
 
-          <article class="card">
-            <div class="card-top">
-              <div class="villain-icon">💣</div>
-              <span class="level">MALWARE CONDICIONAL</span>
-            </div>
-            <h3>Bomba Lógica</h3>
-            <div class="subtitle">LOGIC BOMB — O vilão adormecido</div>
-            <p>Uma bomba lógica é um código malicioso programado para executar uma ação quando uma determinada condição acontece.</p>
-            <ul class="info-list">
-              <li><span>⏳</span><span><strong>Espera:</strong> pode permanecer inativa até uma condição específica ser atingida.</span></li>
-              <li><span>⚡</span><span><strong>Gatilho:</strong> a ação pode ser iniciada por um evento, data ou outra condição definida pelo código.</span></li>
-              <li><span>🛡️</span><span><strong>Defesa:</strong> controle de acesso, backups, atualizações e monitoramento ajudam a reduzir riscos.</span></li>
-            </ul>
-            <div class="tip">
-              <div class="tip-title">💡 Regra de segurança</div>
-              <p>Backups confiáveis e controles de acesso são importantes para recuperar sistemas caso algo dê errado.</p>
-            </div>
-          </article>
+    </main>
 
-          <article class="card">
-            <div class="card-top">
-              <div class="villain-icon">🔒</div>
-              <span class="level">SEQUESTRO DE DADOS</span>
-            </div>
-            <h3>Ransomware</h3>
-            <div class="subtitle">RANSOMWARE — O sequestrador de arquivos</div>
-            <p>Ransomware é um tipo de malware que pode impedir o acesso a dados e exigir pagamento para tentar devolvê-los.</p>
-            <ul class="info-list">
-              <li><span>📁</span><span><strong>Alvo:</strong> pode afetar arquivos e sistemas importantes.</span></li>
-              <li><span>🚨</span><span><strong>Perigo:</strong> pode causar perda ou indisponibilidade de dados.</span></li>
-              <li><span>🛡️</span><span><strong>Defesa:</strong> mantenha backups separados, atualize o sistema e não abra anexos suspeitos.</span></li>
-            </ul>
-            <div class="tip">
-              <div class="tip-title">💡 Escudo principal</div>
-              <p>Um backup atualizado e separado do computador pode ser muito importante para a recuperação.</p>
-            </div>
-          </article>
+    <script>
+        "use strict";
 
-          <article class="card">
-            <div class="card-top">
-              <div class="villain-icon">🕶️</div>
-              <span class="level">ESPIONAGEM</span>
-            </div>
-            <h3>Spyware</h3>
-            <div class="subtitle">SPYWARE — O espião silencioso</div>
-            <p>Spyware é um software malicioso que pode tentar coletar informações sobre a atividade de um dispositivo sem autorização.</p>
-            <ul class="info-list">
-              <li><span>👀</span><span><strong>Objetivo:</strong> coletar informações ou acompanhar atividades.</span></li>
-              <li><span>📡</span><span><strong>Risco:</strong> informações pessoais podem ser expostas dependendo da ameaça.</span></li>
-              <li><span>🛡️</span><span><strong>Defesa:</strong> revise aplicativos instalados, mantenha o sistema atualizado e use proteção confiável.</span></li>
-            </ul>
-            <div class="tip">
-              <div class="tip-title">💡 Dica</div>
-              <p>Instale aplicativos somente de fontes confiáveis e confira quais permissões eles pedem.</p>
-            </div>
-          </article>
+        const passwordElement = document.getElementById("password");
+        const passwordBox = document.getElementById("passwordBox");
+        const generateButton = document.getElementById("generateBtn");
+        const copyButton = document.getElementById("copyBtn");
+        const statusElement = document.getElementById("status");
 
-          <article class="card adware-card" id="adwareCard" onclick="spawnAds()">
-            <div class="card-top">
-              <div class="villain-icon">📣</div>
-              <span class="level">PROPAGANDA MALICIOSA</span>
-            </div>
-            <h3>Adware</h3>
-            <div class="subtitle">ADWARE — O mestre dos anúncios irritantes</div>
-            <p>O Adware é um software criado para encher a tela do usuário de propagandas e anúncios pop-up sem permissão, para fazer o hacker ganhar dinheiro com cliques.</p>
-            <ul class="info-list">
-              <li><span>🎭</span><span><strong>Disfarce:</strong> pode aparecer junto de programas ou downloads aparentemente legítimos.</span></li>
-              <li><span>📣</span><span><strong>Perigo:</strong> pode exibir anúncios excessivos, redirecionar páginas e atrapalhar o uso do dispositivo.</span></li>
-              <li><span>🛡️</span><span><strong>Defesa:</strong> baixe programas de fontes confiáveis, revise as instalações e mantenha o navegador e o sistema atualizados.</span></li>
-            </ul>
-            <div class="tip">
-              <div class="tip-title">💡 Dica do hacker do bem</div>
-              <p>Cuidado ao clicar em botões brilhantes de "Download" ou "Você ganhou um prêmio" em sites desconhecidos!</p>
-            </div>
-          </article>
+        const UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
+        const NUMBERS = "0123456789";
+        const SYMBOLS = "@#$%!&*";
+
+        const ALL_CHARACTERS =
+            UPPERCASE +
+            LOWERCASE +
+            NUMBERS +
+            SYMBOLS;
+
+        const PASSWORD_LENGTH = 14;
 
 
-          <article class="card anim-worm" data-name="Worm Verme" data-type="malware"><div class="card-top"><div class="villain-icon">🪱</div><span class="level">MALWARE</span></div><h3>Worm</h3><div class="subtitle">WORM — O propagador automático</div><p>Um worm pode se espalhar entre sistemas sem depender de um arquivo hospedeiro da mesma forma que um vírus clássico.</p><ul class="info-list"><li><span>🪱</span><span><strong>Movimento:</strong> pode procurar outros sistemas vulneráveis para se espalhar.</span></li><li><span>🌐</span><span><strong>Perigo:</strong> uma propagação rápida pode afetar muitos dispositivos.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> atualizações e proteção de rede ajudam a reduzir riscos.</span></li></ul><div class="tip"><div class="tip-title">💡 Defesa</div><p>Atualizações ajudam a corrigir vulnerabilidades conhecidas.</p></div></article>
-          <article class="card anim-virus" data-name="Vírus Clássico" data-type="malware"><div class="card-top"><div class="villain-icon">🦠</div><span class="level">MALWARE</span></div><h3>Vírus Clássico</h3><div class="subtitle">VIRUS — O replicador de arquivos</div><p>O vírus clássico se anexa a arquivos ou programas e pode se replicar quando o hospedeiro é executado.</p><ul class="info-list"><li><span>🧬</span><span><strong>Disfarce:</strong> pode ficar associado a um arquivo ou programa.</span></li><li><span>📈</span><span><strong>Perigo:</strong> pode alterar, corromper ou prejudicar arquivos.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> use proteção atualizada e evite arquivos desconhecidos.</span></li></ul><div class="tip"><div class="tip-title">💡 Dica</div><p>Não execute arquivos desconhecidos só porque chegaram por mensagem.</p></div></article>
-          <article class="card anim-keylogger" data-name="Keylogger" data-type="espionagem"><div class="card-top"><div class="villain-icon">⌨️</div><span class="level">ESPIONAGEM</span></div><h3>Keylogger</h3><div class="subtitle">KEYLOGGER — O observador do teclado</div><p>Um keylogger malicioso pode registrar teclas digitadas para tentar capturar informações sem autorização.</p><ul class="info-list"><li><span>⌨️</span><span><strong>Alvo:</strong> pode tentar registrar o que é digitado.</span></li><li><span>🔐</span><span><strong>Perigo:</strong> dados digitados podem ser expostos.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> proteção atualizada e autenticação em dois fatores ajudam.</span></li></ul><div class="tip"><div class="tip-title">💡 Defesa extra</div><p>O 2FA cria uma camada adicional mesmo quando uma senha é comprometida.</p></div></article>
-          <article class="card anim-rootkit" data-name="Rootkit" data-type="espionagem"><div class="card-top"><div class="villain-icon">🫥</div><span class="level">OCULTAÇÃO</span></div><h3>Rootkit</h3><div class="subtitle">ROOTKIT — O especialista em esconderijos</div><p>Rootkit é uma categoria associada a técnicas ou componentes maliciosos que buscam manter acesso e dificultar a descoberta.</p><ul class="info-list"><li><span>🫥</span><span><strong>Disfarce:</strong> tenta esconder sua presença ou componentes.</span></li><li><span>🔧</span><span><strong>Perigo:</strong> pode dificultar a investigação e a remoção.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> atualizações e ferramentas confiáveis de segurança.</span></li></ul><div class="tip"><div class="tip-title">💡 Regra</div><p>Suspeita séria de comprometimento é motivo para pedir ajuda a um adulto ou profissional.</p></div></article>
-          <article class="card anim-hijacker" data-name="Hijacker Browser Hijacker" data-type="malware"><div class="card-top"><div class="villain-icon">🔀</div><span class="level">NAVEGADOR</span></div><h3>Hijacker</h3><div class="subtitle">BROWSER HIJACKER — O desviador de rotas</div><p>Um browser hijacker pode alterar configurações do navegador e redirecionar buscas ou páginas.</p><ul class="info-list"><li><span>🔀</span><span><strong>Disfarce:</strong> pode vir junto de extensões ou instalações indesejadas.</span></li><li><span>🌐</span><span><strong>Perigo:</strong> pode mudar página inicial ou buscador.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> revise extensões e configurações.</span></li></ul><div class="tip"><div class="tip-title">💡 Dica</div><p>Instale extensões somente quando realmente precisar.</p></div></article>
-          <article class="card anim-scare" data-name="Scareware" data-type="golpe"><div class="card-top"><div class="villain-icon">🚨</div><span class="level">ENGANAÇÃO</span></div><h3>Scareware</h3><div class="subtitle">SCAREWARE — O assustador profissional</div><p>Scareware usa mensagens alarmistas para convencer a pessoa de que existe um problema e pressioná-la a agir.</p><ul class="info-list"><li><span>😱</span><span><strong>Isca:</strong> alertas falsos podem dizer que o dispositivo está infectado.</span></li><li><span>💳</span><span><strong>Perigo:</strong> pode tentar levar a pessoa a pagar ou instalar software.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> feche a página e verifique usando ferramentas confiáveis.</span></li></ul><div class="tip"><div class="tip-title">💡 Regra de ouro</div><p>Um pop-up dizendo “PERIGO!” não prova que seu computador está infectado.</p></div></article>
-          <article class="card anim-stealer" data-name="Stealer" data-type="espionagem"><div class="card-top"><div class="villain-icon">🎒</div><span class="level">ROUBO DE DADOS</span></div><h3>Stealer</h3><div class="subtitle">STEALER — O ladrão de informações</div><p>Stealers são malwares projetados para tentar coletar informações armazenadas ou acessíveis em um dispositivo.</p><ul class="info-list"><li><span>🎒</span><span><strong>Alvo:</strong> pode procurar credenciais ou dados armazenados.</span></li><li><span>📤</span><span><strong>Perigo:</strong> dados roubados podem ser usados de forma indevida.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> proteção atualizada, senhas únicas e 2FA ajudam.</span></li></ul><div class="tip"><div class="tip-title">💡 Dica</div><p>Evite salvar informações sensíveis em dispositivos que você não controla.</p></div></article>
-          <article class="card anim-cryptojacker" data-name="Cryptojacker" data-type="malware"><div class="card-top"><div class="villain-icon">⛏️</div><span class="level">RECURSOS</span></div><h3>Cryptojacker</h3><div class="subtitle">CRYPTOJACKER — O minerador escondido</div><p>Cryptojacking é o uso não autorizado de recursos de um dispositivo para realizar mineração de criptomoedas.</p><ul class="info-list"><li><span>⚙️</span><span><strong>Alvo:</strong> tenta usar processamento e energia do dispositivo.</span></li><li><span>🔥</span><span><strong>Sinal:</strong> CPU inesperadamente alta pode ser um alerta entre várias causas.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> mantenha navegador e sistema atualizados.</span></li></ul><div class="meter"><div class="meter-top"><span>CPU • SIMULAÇÃO</span><span>82%</span></div><div class="meter-bar"><span></span></div></div></article>
-          <article class="card anim-wiper" data-name="Wiper" data-type="malware"><div class="card-top"><div class="villain-icon">🧹</div><span class="level">DESTRUTIVO</span></div><h3>Wiper</h3><div class="subtitle">WIPER — O apagador destrutivo</div><p>Wipers são malwares projetados para destruir ou tornar dados e sistemas indisponíveis.</p><ul class="info-list"><li><span>🧹</span><span><strong>Objetivo:</strong> causar destruição ou indisponibilidade.</span></li><li><span>💥</span><span><strong>Perigo:</strong> pode causar interrupções e perda de dados.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> backups separados e planos de recuperação são importantes.</span></li></ul><div class="tip"><div class="tip-title">💡 Escudo</div><p>Backups separados podem ajudar na recuperação de incidentes destrutivos.</p></div></article>
-          <article class="card anim-dropper" data-name="Dropper" data-type="malware"><div class="card-top"><div class="villain-icon">📦</div><span class="level">CARREGADOR</span></div><h3>Dropper</h3><div class="subtitle">DROPPER — O entregador de malware</div><p>Um dropper é um programa ou componente usado para entregar ou instalar outro malware no dispositivo.</p><ul class="info-list"><li><span>📦</span><span><strong>Disfarce:</strong> pode parecer um arquivo ou programa comum.</span></li><li><span>🚚</span><span><strong>Perigo:</strong> pode servir de porta de entrada para outra ameaça.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> evite downloads desconhecidos e use proteção atualizada.</span></li></ul><div class="tip"><div class="tip-title">💡 Dica</div><p>Fonte confiável importa tanto quanto o nome bonito de um programa.</p></div></article>
-          <article class="card anim-bot" data-name="Bot Botnet" data-type="malware"><div class="card-top"><div class="villain-icon">🤖</div><span class="level">REDE</span></div><h3>Bot</h3><div class="subtitle">BOT — O dispositivo controlado</div><p>Um bot malicioso pode permitir que um dispositivo execute ações controladas por terceiros, formando redes chamadas botnets.</p><ul class="info-list"><li><span>🤖</span><span><strong>Comportamento:</strong> pode executar tarefas sem que o usuário perceba.</span></li><li><span>🌐</span><span><strong>Perigo:</strong> dispositivos comprometidos podem participar de atividades maliciosas.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> atualizações, senhas fortes e proteção de rede reduzem riscos.</span></li></ul><div class="tip"><div class="tip-title">💡 Dica</div><p>Proteja também roteadores e dispositivos conectados.</p></div></article>
-        </div>
-      </div>
-    </section>
+        // Escolhe um caractere usando o gerador
+        // criptograficamente seguro do navegador.
+        function secureRandomIndex(max) {
+            const randomArray = new Uint32Array(1);
 
-    <section id="defesa">
-      <div class="container">
-        <div class="section-title">
-          <div class="eyebrow">DEFENSE PROTOCOL</div>
-          <h2>Monte sua defesa.</h2>
-        </div>
+            crypto.getRandomValues(randomArray);
 
-        <div class="howto">
-          <div class="step">
-            <div class="step-number">01</div>
-            <h4>Desconfie da pressa</h4>
-            <p>Mensagens que exigem uma ação imediata merecem uma verificação extra.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">02</div>
-            <h4>Confira o endereço</h4>
-            <p>Observe o domínio com atenção e evite inserir dados em páginas desconhecidas.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">03</div>
-            <h4>Use proteção</h4>
-            <p>Mantenha sistema, navegador e ferramentas de segurança atualizados.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- QUIZ -->
-
-    <section class="recommendations" id="recomendacoes">
-      <div class="container">
-        <div class="section-title">
-          <div class="eyebrow">CYBERSHIELD // RECOMENDAÇÕES</div>
-          <h2>🛡️ CENTRAL DE RECOMENDAÇÕES</h2>
-          <p style="color:var(--muted);max-width:720px">Ferramentas conhecidas que podem ajudar a reforçar a proteção digital. Os botões estão preparados para receber links de parceiros futuramente.</p>
-        </div>
-        <div class="recommendation-grid">
-          <article class="product-card">
-            <div class="product-icon">🛡️</div>
-            <span class="product-tag">ANTIVÍRUS</span>
-            <h3>Kaspersky Antivirus</h3>
-            <p>A melhor proteção para computadores contra RATs e Trojans.</p>
-            <a class="product-btn" href="https://kaspersky.com.br" target="_blank" rel="noopener noreferrer">Instalar Proteção</a>
-          </article>
-          <article class="product-card">
-            <div class="product-icon">🔐</div>
-            <span class="product-tag">SEGURANÇA MOBILE</span>
-            <h3>Norton Security</h3>
-            <p>Perfeito para celulares! Protege contra Adwares e links falsos de Phishing.</p>
-            <a class="product-btn" href="https://norton.com" target="_blank" rel="noopener noreferrer">Instalar Proteção</a>
-          </article>
-          <article class="product-card">
-            <div class="product-icon">🌐</div>
-            <span class="product-tag">PRIVACIDADE</span>
-            <h3>NordVPN</h3>
-            <p>Navegue como um hacker do bem sem ninguém rastrear seus dados.</p>
-            <a class="product-btn" href="https://nordvpn.com/pt-br/" target="_blank" rel="noopener noreferrer">Ativar VPN</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="quiz">
-      <div class="container">
-        <div class="section-title"><div class="eyebrow">HACKER DO BEM // TRAINING</div><h2>Mini Quiz de Segurança.</h2></div>
-        <div class="quiz-shell" id="quizShell">
-          <div class="difficulty-grid">
-            <button class="difficulty active" data-difficulty="facil"><strong>🟢 Fácil</strong><small>Conceitos básicos e defesa.</small></button>
-            <button class="difficulty" data-difficulty="medio"><strong>🟡 Médio</strong><small>Situações suspeitas e conceitos.</small></button>
-            <button class="difficulty" data-difficulty="dificil"><strong>🔴 Difícil</strong><small>Casos e comparações avançadas.</small></button>
-          </div>
-          <div class="quiz-config"><span id="difficultyDescription">Perguntas introdutórias para começar o treinamento.</span><label style="color:var(--muted);font-size:.83rem">Quantidade: <select id="questionCount"><option value="5" selected>5 perguntas</option><option value="8">8 perguntas</option><option value="10">10 perguntas</option></select></label></div>
-          <div class="quiz-head"><div><div class="eyebrow" id="questionCounter">PERGUNTA 1 DE 5</div><div class="streak" id="streakText">🔥 Sequência: 0</div></div><div class="quiz-progress"><span id="progressBar"></span></div></div>
-          <div id="quizArea"><div class="question"><div class="question-number" id="questionTag">QUESTÃO 01</div><h3 id="questionText"></h3><div class="answers" id="answers"></div><div class="quiz-feedback" id="quizFeedback" aria-live="polite"></div></div></div>
-          <div class="quiz-result" id="quizResult"><div class="medal" id="medal">🛡️</div><div class="eyebrow">MISSÃO CONCLUÍDA</div><div class="score" id="scoreText"></div><div class="rank" id="rankText"></div><p id="rankDescription" style="color:var(--muted);max-width:600px;margin:10px auto 20px"></p><button class="btn btn-primary" onclick="restartQuiz()">🔄 Novo desafio</button></div>
-        </div>
-        <div class="cta"><div class="eyebrow">MISSÃO CYBERSHIELD</div><h2>Menos medo. Mais conhecimento.</h2><p>A internet fica mais segura quando as pessoas aprendem a reconhecer as ameaças antes de cair nelas.</p><button class="btn btn-primary" onclick="startMission()">🚀 Iniciar missão</button><p id="mission" class="typing" style="display:none;margin-top:18px"></p></div>
-      </div>
-    </section>
-  </main>
-
-  <div id="adPopupLayer" aria-live="polite"></div>
-  <button class="close-ads" id="closeAds" onclick="clearAds()">✕ Fechar anúncios</button>
-
-  <footer>
-    <div class="container">
-      © 2026 CyberShield — Projeto educativo de cibersegurança.
-      <br>
-      <span>Construindo hoje a futura empresa de segurança digital. 🛡️</span>
-    </div>
-  </footer>
-
-  <script>
-    /* =========================
-       MATRIX EFFECT
-       ========================= */
-    const matrixCanvas = document.getElementById("matrix");
-    const matrixCtx = matrixCanvas.getContext("2d");
-
-    const matrixChars = "01アイウエオカキクケコサシスセソ<>[]{}#$%";
-    let fontSize = 15;
-    let columns = 0;
-    let drops = [];
-
-    function resizeMatrix() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      matrixCanvas.width = Math.floor(window.innerWidth * dpr);
-      matrixCanvas.height = Math.floor(window.innerHeight * dpr);
-      matrixCanvas.style.width = window.innerWidth + "px";
-      matrixCanvas.style.height = window.innerHeight + "px";
-      matrixCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      columns = Math.floor(window.innerWidth / fontSize);
-      drops = Array.from({ length: columns }, () =>
-        Math.floor(Math.random() * -35)
-      );
-    }
-
-    function drawMatrix() {
-      matrixCtx.fillStyle = "rgba(5, 8, 13, 0.075)";
-      matrixCtx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-
-      matrixCtx.font = fontSize + "px monospace";
-      matrixCtx.fillStyle = "#45ff9a";
-
-      for (let i = 0; i < drops.length; i++) {
-        const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
-        matrixCtx.fillText(char, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > window.innerHeight && Math.random() > 0.975) {
-          drops[i] = Math.floor(Math.random() * -20);
+            return randomArray[0] % max;
         }
-        drops[i] += 0.7;
-      }
 
-      requestAnimationFrame(drawMatrix);
-    }
 
-    resizeMatrix();
-    drawMatrix();
-    window.addEventListener("resize", resizeMatrix);
-
-    /* =========================
-       VIRUSTOTAL TIP
-       ========================= */
-    function showVirusTotalTip() {
-      const result = document.getElementById("result");
-      result.style.display = "block";
-      result.innerHTML =
-        "🔎 <strong>Passo 1:</strong> copie o endereço suspeito sem abrir a página. " +
-        "<strong>Passo 2:</strong> acesse o VirusTotal por conta própria. " +
-        "<strong>Passo 3:</strong> use a área de análise de URL e observe os resultados. " +
-        "Um resultado limpo não é uma garantia absoluta de segurança.";
-    }
-
-    /* =========================
-       ADWARE POPUPS
-       ========================= */
-    const adPopupLayer = document.getElementById("adPopupLayer");
-    const closeAdsButton = document.getElementById("closeAds");
-
-    function spawnAds(event) {
-      if (event) event.stopPropagation();
-
-      clearAds();
-
-      const ads = [
-        {
-          title: "🎉 VOCÊ GANHOU UM IPHONE!",
-          text: "Parabéns! Você é o visitante número 1.000.000! (É brincadeira 😄)"
-        },
-        {
-          title: "🚨 CLIQUE AQUI!",
-          text: "Clique para ganhar um prêmio totalmente imaginário!"
-        },
-        {
-          title: "💰 OFERTA ULTRA-SECRETA!",
-          text: "Seu computador foi escolhido para uma promoção... provavelmente falsa."
+        function randomCharacter(characters) {
+            return characters[
+                secureRandomIndex(characters.length)
+            ];
         }
-      ];
 
-      ads.forEach((ad, index) => {
-        const box = document.createElement("div");
-        box.className = "fake-ad";
 
-        const left = 8 + Math.random() * 70;
-        const top = 12 + Math.random() * 65;
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
 
-        box.style.left = `clamp(10px, ${left}%, calc(100vw - 285px))`;
-        box.style.top = `clamp(80px, ${top}%, calc(100vh - 220px))`;
-        box.style.animationDelay = `${index * 80}ms`;
+                const j = secureRandomIndex(i + 1);
 
-        box.innerHTML = `
-          <h4>${ad.title}</h4>
-          <p>${ad.text}</p>
-          <button onclick="fakeAdClick(event)">CLIQUE AQUI!</button>
-          <button class="close-mini" onclick="this.closest('.fake-ad').remove(); updateCloseButton()">Fechar</button>
-        `;
+                [array[i], array[j]] =
+                    [array[j], array[i]];
+            }
 
-        adPopupLayer.appendChild(box);
-      });
+            return array;
+        }
 
-      closeAdsButton.style.display = "block";
-    }
 
-    function fakeAdClick(event) {
-      event.stopPropagation();
-      const button = event.currentTarget;
-      button.textContent = "😄 ERA PEGADINHA!";
-      button.disabled = true;
-      button.style.background = "#45ff9a";
-    }
+        function generatePassword() {
 
-    function clearAds() {
-      adPopupLayer.innerHTML = "";
-      updateCloseButton();
-    }
+            const passwordCharacters = [
 
-    function updateCloseButton() {
-      closeAdsButton.style.display =
-        adPopupLayer.children.length ? "block" : "none";
-    }
+                randomCharacter(UPPERCASE),
+                randomCharacter(LOWERCASE),
+                randomCharacter(NUMBERS),
+                randomCharacter(SYMBOLS)
 
-    /* SEARCH + FILTER */
-    const threatSearch=document.getElementById("threatSearch");
-    const threatCards=[...document.querySelectorAll(".villains .card")];
-    const filterButtons=[...document.querySelectorAll(".filter-btn")];
-    let activeFilter="all";
-    function filterThreats(){const term=(threatSearch?.value||"").toLowerCase().trim();let visible=0;threatCards.forEach(card=>{const show=(card.dataset.name||"").toLowerCase().includes(term)&&(activeFilter==="all"||card.dataset.type===activeFilter);card.classList.toggle("hidden-card",!show);if(show)visible++});const c=document.getElementById("threatCount");if(c)c.textContent=visible}
-    threatSearch?.addEventListener("input",filterThreats);filterButtons.forEach(btn=>btn.addEventListener("click",()=>{filterButtons.forEach(b=>b.classList.remove("active"));btn.classList.add("active");activeFilter=btn.dataset.filter;filterThreats()}));
+            ];
 
-    /* QUIZ — 36 PERGUNTAS, 3 DIFICULDADES, SORTEIO */
-    const questionBank={
-      facil:[
-        ["Um link pede sua senha com urgência. O que fazer?",["Clicar rapidamente.","Verificar o endereço e abrir o serviço por uma fonte oficial.","Enviar a senha para confirmar."],1],
-        ["Qual ameaça pode permitir acesso remoto não autorizado?",["RAT","Adware","Atualização oficial"],0],
-        ["Qual é uma boa defesa contra ransomware?",["Ignorar atualizações.","Manter backups confiáveis e atualizar o sistema.","Clicar em anúncios de prêmio."],1],
-        ["O que é phishing?",["Um tipo de golpe que tenta enganar para obter informações.","Um cabo de rede.","Uma atualização do navegador."],0],
-        ["O que fazer com um arquivo de origem desconhecida?",["Abrir para descobrir.","Enviar para amigos.","Não abrir e verificar a origem."],2],
-        ["Para que serve o 2FA?",["Adicionar uma camada extra de autenticação.","Deixar a internet mais rápida.","Aumentar o brilho."],0],
-        ["O Adware é conhecido por...",["Exibir anúncios indesejados.","Fazer backup automaticamente.","Aumentar a memória RAM."],0],
-        ["Um backup ajuda principalmente a...",["Recuperar dados depois de um incidente.","Criar senhas.","Bloquear todos os sites."],0],
-        ["Qual atitude é mais segura?",["Usar a mesma senha em tudo.","Usar senhas únicas e proteção adicional.","Compartilhar códigos."],1],
-        ["Um pop-up diz 'seu PC está infectado, clique agora!'. O melhor é...",["Clicar imediatamente.","Verificar com uma ferramenta de segurança confiável.","Passar dados pessoais."],1],
-        ["Onde é melhor baixar um aplicativo?",["De fonte confiável e conhecida.","De qualquer anúncio.","De um link aleatório."],0],
-        ["Por que atualizações de segurança são importantes?",["Corrigem problemas e vulnerabilidades conhecidas.","Deixam todas as senhas iguais.","Desligam a internet."],0]
-      ],
-      medio:[
-        ["Uma mensagem do 'banco' manda clicar em um link urgente. Qual atitude é mais segura?",["Usar o link.","Abrir o aplicativo/site oficial por conta própria.","Responder com sua senha."],1],
-        ["Qual combinação descreve melhor um RAT?",["Acesso remoto não autorizado + malware.","Anúncio normal + navegador.","Backup + antivírus."],0],
-        ["Qual é uma característica de um worm?",["Pode se espalhar entre sistemas de forma mais autônoma.","Só funciona como anúncio.","É sempre uma ferramenta oficial."],0],
-        ["Por que um rootkit pode ser difícil de investigar?",["Porque tenta esconder sua presença ou componentes.","Porque aparece em letras gigantes.","Porque é um backup."],0],
-        ["Um navegador mudou a página inicial sem você pedir. Qual ameaça pode estar relacionada?",["Hijacker.","Backup.","Firewall físico."],0],
-        ["Qual ameaça tenta registrar teclas digitadas?",["Keylogger.","Wiper.","Worm."],0],
-        ["Um alerta assustador exige pagamento para 'limpar' o computador. Qual é um sinal?",["Pode ser scareware.","É prova de uma infecção real.","É uma atualização normal."],0],
-        ["Um programa usa muita CPU sem motivo aparente. Qual ameaça pode ser uma possibilidade?",["Cryptojacker.","Impressora.","Cabo HDMI."],0],
-        ["Qual é a diferença geral entre vírus clássico e worm?",["Vírus costuma depender de um hospedeiro; worm é mais autônomo.","São exatamente a mesma coisa.","Worm é sempre um anúncio."],0],
-        ["Por que baixar software apenas de fontes confiáveis ajuda?",["Reduz a chance de instalar software adulterado ou malicioso.","Garante 100% de segurança.","Aumenta a internet."],0],
-        ["Qual ação ajuda a limitar o impacto de um wiper?",["Ter backups confiáveis e separados.","Desligar o monitor.","Clicar em pop-ups."],0],
-        ["Um dropper geralmente tem qual função?",["Entregar ou instalar outro malware.","Criar backups.","Corrigir o sistema."],0]
-      ],
-      dificil:[
-        ["Qual afirmação diferencia melhor um dropper de um stealer?",["Dropper pode entregar outro malware; stealer tenta coletar informações.","São exatamente a mesma coisa.","Stealer é sempre antivírus."],0],
-        ["Por que um resultado limpo no VirusTotal não é garantia absoluta?",["Ferramentas têm limitações e ameaças novas podem não ser reconhecidas.","O site nunca analisa nada.","Qualquer arquivo é automaticamente seguro."],0],
-        ["Qual cenário combina mais com uma bomba lógica?",["Uma ação maliciosa condicionada a um evento.","Um anúncio aleatório.","Um backup programado."],0],
-        ["Qual defesa é especialmente importante contra ransomware e wipers?",["Backups confiáveis, testados e separados.","Usar a mesma senha em tudo.","Desativar atualizações."],0],
-        ["Um malware tenta permanecer escondido e manter acesso. Qual categoria combina melhor?",["Rootkit.","Adware.","Scareware."],0],
-        ["Uma botnet é melhor descrita como...",["Uma rede de dispositivos comprometidos controlados para ações coordenadas.","Um backup em nuvem.","Uma lista de senhas oficiais."],0],
-        ["Por que 2FA ajuda contra roubo de senha?",["Adiciona uma segunda etapa além da senha.","Torna a senha pública.","Impede qualquer malware."],0],
-        ["Qual cenário é mais compatível com um browser hijacker?",["O navegador redireciona buscas e muda configurações sem autorização.","O computador recebe atualização oficial.","O usuário troca o papel de parede."],0],
-        ["Qual afirmação sobre scareware é mais correta?",["Ele usa medo e urgência para pressionar a vítima.","Todo alerta vermelho é verdadeiro.","Scareware é firewall."],0],
-        ["Um cryptojacker tenta obter benefício principalmente usando...",["Recursos computacionais do dispositivo para mineração não autorizada.","A câmera para fotos.","Backups."],0],
-        ["Qual estratégia reduz a chance de cair em phishing?",["Verificar o domínio e acessar o serviço por um caminho oficial.","Clicar mais rápido.","Responder com a senha."],0],
-        ["Qual princípio é mais importante ao analisar uma ameaça desconhecida?",["Evitar executar ações arriscadas e buscar informação em fontes confiáveis.","Testar no computador principal.","Desativar a proteção."],0]
-      ]
-    };
-    const difficultyInfo={facil:"Perguntas introdutórias para começar o treinamento.",medio:"Situações práticas e conceitos intermediários.",dificil:"Conceitos mais avançados e comparação entre ameaças."};
-    let difficulty="facil",quizQuestions=[],currentQuestion=0,score=0,streak=0,bestStreak=0,quizLocked=false;
-    const questionText=document.getElementById("questionText"),answersEl=document.getElementById("answers"),feedbackEl=document.getElementById("quizFeedback"),counterEl=document.getElementById("questionCounter"),progressBar=document.getElementById("progressBar"),questionTag=document.getElementById("questionTag"),streakText=document.getElementById("streakText"),quizArea=document.getElementById("quizArea"),quizResult=document.getElementById("quizResult"),quizShell=document.getElementById("quizShell"),questionCount=document.getElementById("questionCount");
-    function shuffle(a){const c=[...a];for(let i=c.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[c[i],c[j]]=[c[j],c[i]]}return c}
-    function startQuiz(){const n=Number(questionCount.value);quizQuestions=shuffle(questionBank[difficulty]).slice(0,Math.min(n,questionBank[difficulty].length));currentQuestion=0;score=0;streak=0;bestStreak=0;quizLocked=false;quizResult.style.display="none";quizArea.style.display="block";renderQuestion()}
-    function renderQuestion(){quizLocked=false;const q=quizQuestions[currentQuestion];counterEl.textContent=`PERGUNTA ${currentQuestion+1} DE ${quizQuestions.length}`;questionTag.textContent=`QUESTÃO ${String(currentQuestion+1).padStart(2,"0")}`;progressBar.style.width=`${currentQuestion/quizQuestions.length*100}%`;questionText.textContent=q[0];feedbackEl.textContent="";feedbackEl.className="quiz-feedback";streakText.textContent=`🔥 Sequência: ${streak}`;answersEl.innerHTML="";shuffle(q[1].map((text,index)=>({text,index}))).forEach(item=>{const b=document.createElement("button");b.className="answer";b.textContent=item.text;b.onclick=()=>answerQuestion(item.index,b);answersEl.appendChild(b)})}
-    function answerQuestion(selected,button){if(quizLocked)return;quizLocked=true;const q=quizQuestions[currentQuestion],all=[...answersEl.querySelectorAll(".answer")];all.forEach(b=>b.disabled=true);if(selected===q[2]){score++;streak++;bestStreak=Math.max(bestStreak,streak);button.classList.add("correct");feedbackEl.textContent="✅ ACERTOU! Defesa digital +1!";feedbackEl.className="quiz-feedback good";playTone(true);quizShell.classList.add("quiz-flash");setTimeout(()=>quizShell.classList.remove("quiz-flash"),500)}else{streak=0;button.classList.add("wrong");all.forEach(b=>{if(b.textContent===q[1][q[2]])b.classList.add("correct")});feedbackEl.textContent="❌ Quase! A resposta correta ficou destacada em verde.";feedbackEl.className="quiz-feedback bad";playTone(false)}streakText.textContent=`🔥 Sequência: ${streak}`;setTimeout(()=>{currentQuestion++;currentQuestion<quizQuestions.length?renderQuestion():showQuizResult()},900)}
-    function showQuizResult(){progressBar.style.width="100%";quizArea.style.display="none";quizResult.style.display="block";const pct=Math.round(score/quizQuestions.length*100),medal=document.getElementById("medal");document.getElementById("scoreText").textContent=`${score} / ${quizQuestions.length} respostas certas • ${pct}%`;const rank=document.getElementById("rankText"),desc=document.getElementById("rankDescription");if(pct>=85){medal.textContent="🏆";rank.textContent="Master Hacker do Bem";desc.textContent=`Excelente desempenho no nível ${difficulty}. Melhor sequência: ${bestStreak}.`}else if(pct>=60){medal.textContent="🥈";rank.textContent="Agente de Segurança";desc.textContent=`Muito bom! Continue treinando para dominar o nível ${difficulty}.`}else{medal.textContent="🛡️";rank.textContent="Recruta";desc.textContent="Treinamento concluído. Revise os cards e tente novamente!"}}
-    function restartQuiz(){startQuiz();document.getElementById("quiz").scrollIntoView({behavior:"smooth",block:"start"})}
-    document.querySelectorAll(".difficulty").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".difficulty").forEach(b=>b.classList.remove("active"));btn.classList.add("active");difficulty=btn.dataset.difficulty;document.getElementById("difficultyDescription").textContent=difficultyInfo[difficulty];startQuiz()}));questionCount.addEventListener("change",startQuiz);startQuiz();
 
-    /* =========================
-       MISSÃO
-       ========================= */
-    function startMission() {
-      const el = document.getElementById("mission");
-      const text = "SISTEMA ONLINE... Defesa ativada. 🛡️";
-      el.style.display = "inline-block";
-      el.textContent = "";
+            while (
+                passwordCharacters.length <
+                PASSWORD_LENGTH
+            ) {
 
-      let i = 0;
-      const timer = setInterval(() => {
-        el.textContent += text[i++];
-        if (i >= text.length) clearInterval(timer);
-      }, 38);
-    }
-  </script>
+                passwordCharacters.push(
+                    randomCharacter(ALL_CHARACTERS)
+                );
+
+            }
+
+
+            shuffle(passwordCharacters);
+
+
+            const password =
+                passwordCharacters.join("");
+
+
+            passwordElement.textContent = password;
+
+            passwordBox.classList.add("active");
+
+            statusElement.textContent =
+                "Senha forte gerada com sucesso!";
+
+
+            setTimeout(() => {
+                statusElement.textContent = "";
+            }, 1800);
+        }
+
+
+        async function copyPassword() {
+
+            const password =
+                passwordElement.textContent;
+
+
+            if (
+                !password ||
+                password === "Clique no botão para gerar..."
+            ) {
+
+                statusElement.textContent =
+                    "Gere uma senha primeiro.";
+
+                return;
+            }
+
+
+            try {
+
+                await navigator.clipboard.writeText(password);
+
+                statusElement.textContent =
+                    "Senha copiada com sucesso!";
+
+            } catch (error) {
+
+                // Fallback para navegadores que não
+                // disponibilizam a Clipboard API.
+                const textArea =
+                    document.createElement("textarea");
+
+                textArea.value = password;
+
+                textArea.style.position = "fixed";
+                textArea.style.opacity = "0";
+
+                document.body.appendChild(textArea);
+
+                textArea.select();
+
+                try {
+
+                    document.execCommand("copy");
+
+                    statusElement.textContent =
+                        "Senha copiada com sucesso!";
+
+                } catch {
+
+                    statusElement.textContent =
+                        "Não foi possível copiar automaticamente.";
+
+                }
+
+                document.body.removeChild(textArea);
+            }
+
+
+            setTimeout(() => {
+                statusElement.textContent = "";
+            }, 1800);
+        }
+
+
+        generateButton.addEventListener(
+            "click",
+            generatePassword
+        );
+
+
+        copyButton.addEventListener(
+            "click",
+            copyPassword
+        );
+
+    </script>
+
 </body>
 </html>
