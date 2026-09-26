@@ -716,7 +716,22 @@
 .difficulty-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}.difficulty{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);color:#dce5ec;border-radius:14px;padding:14px;text-align:left;cursor:pointer;transition:.22s}.difficulty:hover{transform:translateY(-2px);border-color:rgba(69,255,154,.3)}.difficulty.active{background:rgba(69,255,154,.09);border-color:var(--green);box-shadow:0 0 25px rgba(69,255,154,.06)}.difficulty strong{display:block;font-family:"Space Grotesk",sans-serif}.difficulty small{display:block;color:var(--muted);margin-top:3px}.quiz-config{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:13px 0 21px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:23px}.quiz-config span{color:var(--muted);font-size:.83rem}.quiz-config select{color:white;background:#0c1620;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px 10px;outline:none}.streak{font-size:.8rem;color:var(--yellow);font-weight:800}.quiz-flash{animation:quizFlash .45s ease}@keyframes quizFlash{50%{box-shadow:0 0 45px rgba(69,255,154,.24)}}
 @media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.difficulty-grid{grid-template-columns:1fr}}@media(max-width:480px){.stats{gap:8px}.stat{padding:13px 8px}.stat strong{font-size:1.35rem}}
 
-  </style>
+  
+/* CENTRAL DE RECOMENDAÇÕES */
+.recommendations{margin-top:70px}
+.recommendation-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px}
+.product-card{position:relative;overflow:hidden;padding:28px;border:1px solid rgba(50,217,255,.16);border-radius:22px;background:linear-gradient(145deg,rgba(14,25,36,.94),rgba(7,13,20,.94));box-shadow:0 18px 55px rgba(0,0,0,.25);transition:transform .28s,box-shadow .28s,border-color .28s}
+.product-card:hover{transform:translateY(-7px);border-color:rgba(50,217,255,.48);box-shadow:0 24px 65px rgba(0,180,255,.12)}
+.product-card:before{content:"";position:absolute;inset:-60% 35% auto -30%;height:180px;background:rgba(50,217,255,.12);filter:blur(45px);pointer-events:none}
+.product-icon{font-size:2.5rem;margin-bottom:16px;position:relative}
+.product-card h3{font-family:"Space Grotesk",sans-serif;font-size:1.35rem;margin:0 0 9px;position:relative}
+.product-card p{color:var(--muted);line-height:1.65;min-height:78px;position:relative}
+.product-btn{display:inline-flex;align-items:center;justify-content:center;width:100%;margin-top:14px;padding:13px 16px;border-radius:12px;text-decoration:none;font-weight:800;color:#fff;background:linear-gradient(135deg,#168cff,#32d9ff);box-shadow:0 8px 25px rgba(22,140,255,.22);transition:.2s;position:relative}
+.product-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(22,140,255,.35);filter:brightness(1.08)}
+.product-tag{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.08em;color:#8eeaff;border:1px solid rgba(50,217,255,.2);background:rgba(50,217,255,.07);padding:5px 8px;border-radius:999px;margin-bottom:12px;position:relative}
+@media(max-width:850px){.recommendation-grid{grid-template-columns:1fr}}
+
+</style>
 </head>
 
 <body>
@@ -961,6 +976,40 @@
     </section>
 
     <!-- QUIZ -->
+
+    <section class="recommendations" id="recomendacoes">
+      <div class="container">
+        <div class="section-title">
+          <div class="eyebrow">CYBERSHIELD // RECOMENDAÇÕES</div>
+          <h2>🛡️ CENTRAL DE RECOMENDAÇÕES</h2>
+          <p style="color:var(--muted);max-width:720px">Ferramentas conhecidas que podem ajudar a reforçar a proteção digital. Os botões estão preparados para receber links de parceiros futuramente.</p>
+        </div>
+        <div class="recommendation-grid">
+          <article class="product-card">
+            <div class="product-icon">🛡️</div>
+            <span class="product-tag">ANTIVÍRUS</span>
+            <h3>Kaspersky Antivirus</h3>
+            <p>A melhor proteção para computadores contra RATs e Trojans.</p>
+            <a class="product-btn" href="#">Instalar Proteção</a>
+          </article>
+          <article class="product-card">
+            <div class="product-icon">🔐</div>
+            <span class="product-tag">SEGURANÇA MOBILE</span>
+            <h3>Norton Security</h3>
+            <p>Perfeito para celulares! Protege contra Adwares e links falsos de Phishing.</p>
+            <a class="product-btn" href="#">Instalar Proteção</a>
+          </article>
+          <article class="product-card">
+            <div class="product-icon">🌐</div>
+            <span class="product-tag">PRIVACIDADE</span>
+            <h3>NordVPN</h3>
+            <p>Navegue como um hacker do bem sem ninguém rastrear seus dados.</p>
+            <a class="product-btn" href="#">Ativar VPN</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="quiz">
       <div class="container">
         <div class="section-title"><div class="eyebrow">HACKER DO BEM // TRAINING</div><h2>Mini Quiz de Segurança.</h2></div>
