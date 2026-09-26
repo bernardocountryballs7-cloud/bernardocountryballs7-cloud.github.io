@@ -697,6 +697,25 @@
         transition-duration: .001ms !important;
       }
     }
+
+/* ===== UPGRADE SUPREMO ===== */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:-25px 0 30px}.stat{padding:17px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.025);border-radius:17px;text-align:center}.stat strong{display:block;font-family:"Space Grotesk",sans-serif;font-size:1.65rem;color:var(--green)}.stat span{font-size:.76rem;color:var(--muted)}
+.threat-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:22px}.search{flex:1 1 280px;position:relative}.search input{width:100%;color:white;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);outline:none;border-radius:13px;padding:13px 15px 13px 42px}.search input:focus{border-color:rgba(69,255,154,.45);box-shadow:0 0 0 3px rgba(69,255,154,.06)}.search span{position:absolute;left:14px;top:10px}.filter-btn{color:var(--muted);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:11px 12px;border-radius:11px;cursor:pointer;transition:.2s}.filter-btn.active,.filter-btn:hover{color:#00130b;background:var(--green);border-color:var(--green)}.hidden-card{display:none!important}
+.anim-worm .villain-icon{animation:wormHop 2.2s ease-in-out infinite}@keyframes wormHop{0%,100%{transform:translateX(0)}25%{transform:translateX(5px) rotate(4deg)}50%{transform:translateX(-3px)}75%{transform:translateX(7px) rotate(-4deg)}}
+.anim-keylogger .villain-icon::after{content:"_";color:var(--green);font-weight:900;animation:cursorBlink .8s infinite}@keyframes cursorBlink{50%{opacity:0}}
+.anim-rootkit .villain-icon{position:relative}.anim-rootkit .villain-icon::after{content:"";position:absolute;left:8px;right:8px;height:2px;background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:scanLine 1.6s linear infinite}@keyframes scanLine{0%{top:9px}100%{top:49px}}
+.anim-scare .villain-icon{animation:alarm 1.6s ease-in-out infinite}@keyframes alarm{0%,100%{box-shadow:0 0 0 rgba(255,95,118,0)}50%{box-shadow:0 0 24px rgba(255,95,118,.25);filter:saturate(1.35)}}
+.anim-bot .villain-icon{animation:signal 1.8s ease-in-out infinite}@keyframes signal{0%,100%{box-shadow:0 0 0 rgba(50,217,255,0)}50%{box-shadow:0 0 24px rgba(50,217,255,.25)}}
+.anim-cryptojacker .villain-icon{animation:cpu 1.1s ease-in-out infinite}@keyframes cpu{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px) scale(1.03)}}
+.anim-wiper:hover .villain-icon{animation:glitch .2s steps(2) infinite}@keyframes glitch{50%{transform:translate(3px,-2px) skewX(8deg)}}
+.anim-dropper .villain-icon{animation:drop 1.7s ease-in-out infinite}@keyframes drop{0%,100%{transform:translateY(-4px)}50%{transform:translateY(5px)}}
+.anim-hijacker .villain-icon{animation:redirect 1.5s ease-in-out infinite}@keyframes redirect{0%,100%{transform:translateX(0)}50%{transform:translateX(7px)}}
+.anim-stealer .villain-icon{animation:steal 1.7s ease-in-out infinite}@keyframes steal{0%,100%{transform:scale(1)}50%{transform:scale(1.08) rotate(3deg)}}
+.anim-virus .villain-icon{animation:replicate 2s ease-in-out infinite}@keyframes replicate{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.meter{margin-top:16px;padding:12px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06)}.meter-top{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted);margin-bottom:7px}.meter-bar{height:7px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}.meter-bar span{display:block;height:100%;width:82%;background:linear-gradient(90deg,var(--cyan),var(--green));animation:meterPulse 1.3s ease-in-out infinite alternate}@keyframes meterPulse{to{width:94%}}
+.difficulty-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}.difficulty{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);color:#dce5ec;border-radius:14px;padding:14px;text-align:left;cursor:pointer;transition:.22s}.difficulty:hover{transform:translateY(-2px);border-color:rgba(69,255,154,.3)}.difficulty.active{background:rgba(69,255,154,.09);border-color:var(--green);box-shadow:0 0 25px rgba(69,255,154,.06)}.difficulty strong{display:block;font-family:"Space Grotesk",sans-serif}.difficulty small{display:block;color:var(--muted);margin-top:3px}.quiz-config{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:13px 0 21px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:23px}.quiz-config span{color:var(--muted);font-size:.83rem}.quiz-config select{color:white;background:#0c1620;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px 10px;outline:none}.streak{font-size:.8rem;color:var(--yellow);font-weight:800}.quiz-flash{animation:quizFlash .45s ease}@keyframes quizFlash{50%{box-shadow:0 0 45px rgba(69,255,154,.24)}}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.difficulty-grid{grid-template-columns:1fr}}@media(max-width:480px){.stats{gap:8px}.stat{padding:13px 8px}.stat strong{font-size:1.35rem}}
+
   </style>
 </head>
 
@@ -744,12 +763,24 @@
 
     <section id="vilões">
       <div class="container">
+        <div class="stats">
+          <div class="stat"><strong id="threatCount">19</strong><span>ameaças catalogadas</span></div>
+          <div class="stat"><strong>3</strong><span>níveis de quiz</span></div>
+          <div class="stat"><strong>36+</strong><span>perguntas disponíveis</span></div>
+          <div class="stat"><strong>100%</strong><span>modo educativo</span></div>
+        </div>
         <div class="section-title">
           <div class="eyebrow">DATABASE // AMEAÇAS</div>
           <h2>Conheça os vilões.</h2>
         </div>
-
-        <div class="villains">
+        <div class="threat-tools">
+          <label class="search"><span>🔎</span><input id="threatSearch" type="search" placeholder="Pesquisar uma ameaça..." aria-label="Pesquisar ameaça"></label>
+          <button class="filter-btn active" data-filter="all">Todos</button>
+          <button class="filter-btn" data-filter="malware">Malware</button>
+          <button class="filter-btn" data-filter="golpe">Golpes</button>
+          <button class="filter-btn" data-filter="espionagem">Espionagem</button>
+        </div>
+        <div class="villains" id="villainGrid">
 
           <article class="card">
             <div class="card-top">
@@ -886,6 +917,18 @@
             </div>
           </article>
 
+
+          <article class="card anim-worm" data-name="Worm Verme" data-type="malware"><div class="card-top"><div class="villain-icon">🪱</div><span class="level">MALWARE</span></div><h3>Worm</h3><div class="subtitle">WORM — O propagador automático</div><p>Um worm pode se espalhar entre sistemas sem depender de um arquivo hospedeiro da mesma forma que um vírus clássico.</p><ul class="info-list"><li><span>🪱</span><span><strong>Movimento:</strong> pode procurar outros sistemas vulneráveis para se espalhar.</span></li><li><span>🌐</span><span><strong>Perigo:</strong> uma propagação rápida pode afetar muitos dispositivos.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> atualizações e proteção de rede ajudam a reduzir riscos.</span></li></ul><div class="tip"><div class="tip-title">💡 Defesa</div><p>Atualizações ajudam a corrigir vulnerabilidades conhecidas.</p></div></article>
+          <article class="card anim-virus" data-name="Vírus Clássico" data-type="malware"><div class="card-top"><div class="villain-icon">🦠</div><span class="level">MALWARE</span></div><h3>Vírus Clássico</h3><div class="subtitle">VIRUS — O replicador de arquivos</div><p>O vírus clássico se anexa a arquivos ou programas e pode se replicar quando o hospedeiro é executado.</p><ul class="info-list"><li><span>🧬</span><span><strong>Disfarce:</strong> pode ficar associado a um arquivo ou programa.</span></li><li><span>📈</span><span><strong>Perigo:</strong> pode alterar, corromper ou prejudicar arquivos.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> use proteção atualizada e evite arquivos desconhecidos.</span></li></ul><div class="tip"><div class="tip-title">💡 Dica</div><p>Não execute arquivos desconhecidos só porque chegaram por mensagem.</p></div></article>
+          <article class="card anim-keylogger" data-name="Keylogger" data-type="espionagem"><div class="card-top"><div class="villain-icon">⌨️</div><span class="level">ESPIONAGEM</span></div><h3>Keylogger</h3><div class="subtitle">KEYLOGGER — O observador do teclado</div><p>Um keylogger malicioso pode registrar teclas digitadas para tentar capturar informações sem autorização.</p><ul class="info-list"><li><span>⌨️</span><span><strong>Alvo:</strong> pode tentar registrar o que é digitado.</span></li><li><span>🔐</span><span><strong>Perigo:</strong> dados digitados podem ser expostos.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> proteção atualizada e autenticação em dois fatores ajudam.</span></li></ul><div class="tip"><div class="tip-title">💡 Defesa extra</div><p>O 2FA cria uma camada adicional mesmo quando uma senha é comprometida.</p></div></article>
+          <article class="card anim-rootkit" data-name="Rootkit" data-type="espionagem"><div class="card-top"><div class="villain-icon">🫥</div><span class="level">OCULTAÇÃO</span></div><h3>Rootkit</h3><div class="subtitle">ROOTKIT — O especialista em esconderijos</div><p>Rootkit é uma categoria associada a técnicas ou componentes maliciosos que buscam manter acesso e dificultar a descoberta.</p><ul class="info-list"><li><span>🫥</span><span><strong>Disfarce:</strong> tenta esconder sua presença ou componentes.</span></li><li><span>🔧</span><span><strong>Perigo:</strong> pode dificultar a investigação e a remoção.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> atualizações e ferramentas confiáveis de segurança.</span></li></ul><div class="tip"><div class="tip-title">💡 Regra</div><p>Suspeita séria de comprometimento é motivo para pedir ajuda a um adulto ou profissional.</p></div></article>
+          <article class="card anim-hijacker" data-name="Hijacker Browser Hijacker" data-type="malware"><div class="card-top"><div class="villain-icon">🔀</div><span class="level">NAVEGADOR</span></div><h3>Hijacker</h3><div class="subtitle">BROWSER HIJACKER — O desviador de rotas</div><p>Um browser hijacker pode alterar configurações do navegador e redirecionar buscas ou páginas.</p><ul class="info-list"><li><span>🔀</span><span><strong>Disfarce:</strong> pode vir junto de extensões ou instalações indesejadas.</span></li><li><span>🌐</span><span><strong>Perigo:</strong> pode mudar página inicial ou buscador.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> revise extensões e configurações.</span></li></ul><div class="tip"><div class="tip-title">💡 Dica</div><p>Instale extensões somente quando realmente precisar.</p></div></article>
+          <article class="card anim-scare" data-name="Scareware" data-type="golpe"><div class="card-top"><div class="villain-icon">🚨</div><span class="level">ENGANAÇÃO</span></div><h3>Scareware</h3><div class="subtitle">SCAREWARE — O assustador profissional</div><p>Scareware usa mensagens alarmistas para convencer a pessoa de que existe um problema e pressioná-la a agir.</p><ul class="info-list"><li><span>😱</span><span><strong>Isca:</strong> alertas falsos podem dizer que o dispositivo está infectado.</span></li><li><span>💳</span><span><strong>Perigo:</strong> pode tentar levar a pessoa a pagar ou instalar software.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> feche a página e verifique usando ferramentas confiáveis.</span></li></ul><div class="tip"><div class="tip-title">💡 Regra de ouro</div><p>Um pop-up dizendo “PERIGO!” não prova que seu computador está infectado.</p></div></article>
+          <article class="card anim-stealer" data-name="Stealer" data-type="espionagem"><div class="card-top"><div class="villain-icon">🎒</div><span class="level">ROUBO DE DADOS</span></div><h3>Stealer</h3><div class="subtitle">STEALER — O ladrão de informações</div><p>Stealers são malwares projetados para tentar coletar informações armazenadas ou acessíveis em um dispositivo.</p><ul class="info-list"><li><span>🎒</span><span><strong>Alvo:</strong> pode procurar credenciais ou dados armazenados.</span></li><li><span>📤</span><span><strong>Perigo:</strong> dados roubados podem ser usados de forma indevida.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> proteção atualizada, senhas únicas e 2FA ajudam.</span></li></ul><div class="tip"><div class="tip-title">💡 Dica</div><p>Evite salvar informações sensíveis em dispositivos que você não controla.</p></div></article>
+          <article class="card anim-cryptojacker" data-name="Cryptojacker" data-type="malware"><div class="card-top"><div class="villain-icon">⛏️</div><span class="level">RECURSOS</span></div><h3>Cryptojacker</h3><div class="subtitle">CRYPTOJACKER — O minerador escondido</div><p>Cryptojacking é o uso não autorizado de recursos de um dispositivo para realizar mineração de criptomoedas.</p><ul class="info-list"><li><span>⚙️</span><span><strong>Alvo:</strong> tenta usar processamento e energia do dispositivo.</span></li><li><span>🔥</span><span><strong>Sinal:</strong> CPU inesperadamente alta pode ser um alerta entre várias causas.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> mantenha navegador e sistema atualizados.</span></li></ul><div class="meter"><div class="meter-top"><span>CPU • SIMULAÇÃO</span><span>82%</span></div><div class="meter-bar"><span></span></div></div></article>
+          <article class="card anim-wiper" data-name="Wiper" data-type="malware"><div class="card-top"><div class="villain-icon">🧹</div><span class="level">DESTRUTIVO</span></div><h3>Wiper</h3><div class="subtitle">WIPER — O apagador destrutivo</div><p>Wipers são malwares projetados para destruir ou tornar dados e sistemas indisponíveis.</p><ul class="info-list"><li><span>🧹</span><span><strong>Objetivo:</strong> causar destruição ou indisponibilidade.</span></li><li><span>💥</span><span><strong>Perigo:</strong> pode causar interrupções e perda de dados.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> backups separados e planos de recuperação são importantes.</span></li></ul><div class="tip"><div class="tip-title">💡 Escudo</div><p>Backups separados podem ajudar na recuperação de incidentes destrutivos.</p></div></article>
+          <article class="card anim-dropper" data-name="Dropper" data-type="malware"><div class="card-top"><div class="villain-icon">📦</div><span class="level">CARREGADOR</span></div><h3>Dropper</h3><div class="subtitle">DROPPER — O entregador de malware</div><p>Um dropper é um programa ou componente usado para entregar ou instalar outro malware no dispositivo.</p><ul class="info-list"><li><span>📦</span><span><strong>Disfarce:</strong> pode parecer um arquivo ou programa comum.</span></li><li><span>🚚</span><span><strong>Perigo:</strong> pode servir de porta de entrada para outra ameaça.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> evite downloads desconhecidos e use proteção atualizada.</span></li></ul><div class="tip"><div class="tip-title">💡 Dica</div><p>Fonte confiável importa tanto quanto o nome bonito de um programa.</p></div></article>
+          <article class="card anim-bot" data-name="Bot Botnet" data-type="malware"><div class="card-top"><div class="villain-icon">🤖</div><span class="level">REDE</span></div><h3>Bot</h3><div class="subtitle">BOT — O dispositivo controlado</div><p>Um bot malicioso pode permitir que um dispositivo execute ações controladas por terceiros, formando redes chamadas botnets.</p><ul class="info-list"><li><span>🤖</span><span><strong>Comportamento:</strong> pode executar tarefas sem que o usuário perceba.</span></li><li><span>🌐</span><span><strong>Perigo:</strong> dispositivos comprometidos podem participar de atividades maliciosas.</span></li><li><span>🛡️</span><span><strong>Defesa:</strong> atualizações, senhas fortes e proteção de rede reduzem riscos.</span></li></ul><div class="tip"><div class="tip-title">💡 Dica</div><p>Proteja também roteadores e dispositivos conectados.</p></div></article>
         </div>
       </div>
     </section>
@@ -920,48 +963,19 @@
     <!-- QUIZ -->
     <section id="quiz">
       <div class="container">
-        <div class="section-title">
-          <div class="eyebrow">HACKER DO BEM // TRAINING</div>
-          <h2>Mini Quiz de Segurança.</h2>
-        </div>
-
+        <div class="section-title"><div class="eyebrow">HACKER DO BEM // TRAINING</div><h2>Mini Quiz de Segurança.</h2></div>
         <div class="quiz-shell" id="quizShell">
-          <div class="quiz-head">
-            <div>
-              <div class="eyebrow" id="questionCounter">PERGUNTA 1 DE 3</div>
-              <p style="color:var(--muted);font-size:.88rem;">Escolha uma resposta para avançar.</p>
-            </div>
-            <div class="quiz-progress" aria-label="Progresso do quiz">
-              <span id="progressBar"></span>
-            </div>
+          <div class="difficulty-grid">
+            <button class="difficulty active" data-difficulty="facil"><strong>🟢 Fácil</strong><small>Conceitos básicos e defesa.</small></button>
+            <button class="difficulty" data-difficulty="medio"><strong>🟡 Médio</strong><small>Situações suspeitas e conceitos.</small></button>
+            <button class="difficulty" data-difficulty="dificil"><strong>🔴 Difícil</strong><small>Casos e comparações avançadas.</small></button>
           </div>
-
-          <div id="quizArea">
-            <div class="question">
-              <div class="question-number">QUESTÃO 01</div>
-              <h3 id="questionText"></h3>
-              <div class="answers" id="answers"></div>
-              <div class="quiz-feedback" id="quizFeedback" aria-live="polite"></div>
-            </div>
-          </div>
-
-          <div class="quiz-result" id="quizResult">
-            <div class="medal" id="medal">🛡️</div>
-            <div class="eyebrow">MISSÃO CONCLUÍDA</div>
-            <div class="score" id="scoreText"></div>
-            <div class="rank" id="rankText"></div>
-            <p id="rankDescription" style="color:var(--muted);max-width:580px;margin:10px auto 20px;"></p>
-            <button class="btn btn-primary" onclick="restartQuiz()">🔄 Jogar novamente</button>
-          </div>
+          <div class="quiz-config"><span id="difficultyDescription">Perguntas introdutórias para começar o treinamento.</span><label style="color:var(--muted);font-size:.83rem">Quantidade: <select id="questionCount"><option value="5" selected>5 perguntas</option><option value="8">8 perguntas</option><option value="10">10 perguntas</option></select></label></div>
+          <div class="quiz-head"><div><div class="eyebrow" id="questionCounter">PERGUNTA 1 DE 5</div><div class="streak" id="streakText">🔥 Sequência: 0</div></div><div class="quiz-progress"><span id="progressBar"></span></div></div>
+          <div id="quizArea"><div class="question"><div class="question-number" id="questionTag">QUESTÃO 01</div><h3 id="questionText"></h3><div class="answers" id="answers"></div><div class="quiz-feedback" id="quizFeedback" aria-live="polite"></div></div></div>
+          <div class="quiz-result" id="quizResult"><div class="medal" id="medal">🛡️</div><div class="eyebrow">MISSÃO CONCLUÍDA</div><div class="score" id="scoreText"></div><div class="rank" id="rankText"></div><p id="rankDescription" style="color:var(--muted);max-width:600px;margin:10px auto 20px"></p><button class="btn btn-primary" onclick="restartQuiz()">🔄 Novo desafio</button></div>
         </div>
-
-        <div class="cta">
-          <div class="eyebrow">MISSÃO CYBERSHIELD</div>
-          <h2>Menos medo. Mais conhecimento.</h2>
-          <p>A internet fica mais segura quando as pessoas aprendem a reconhecer os golpes antes de cair neles.</p>
-          <button class="btn btn-primary" onclick="startMission()">🚀 Iniciar missão</button>
-          <p id="mission" class="typing" style="display:none;margin-top:18px;"></p>
-        </div>
+        <div class="cta"><div class="eyebrow">MISSÃO CYBERSHIELD</div><h2>Menos medo. Mais conhecimento.</h2><p>A internet fica mais segura quando as pessoas aprendem a reconhecer as ameaças antes de cair nelas.</p><button class="btn btn-primary" onclick="startMission()">🚀 Iniciar missão</button><p id="mission" class="typing" style="display:none;margin-top:18px"></p></div>
       </div>
     </section>
   </main>
@@ -1108,169 +1122,69 @@
         adPopupLayer.children.length ? "block" : "none";
     }
 
-    /* =========================
-       MINI QUIZ
-       ========================= */
-    const questions = [
-      {
-        question: "Um link pede sua senha com urgência. O que você deve fazer?",
-        answers: [
-          "Clicar rapidamente antes que expire.",
-          "Verificar o endereço e abrir o serviço por uma fonte oficial.",
-          "Enviar a senha para confirmar sua identidade."
-        ],
-        correct: 1
-      },
-      {
-        question: "Qual ameaça pode permitir acesso remoto não autorizado a um dispositivo?",
-        answers: [
-          "RAT",
-          "Adware",
-          "Uma atualização oficial"
-        ],
-        correct: 0
-      },
-      {
-        question: "Qual atitude ajuda a se proteger de ransomware?",
-        answers: [
-          "Clicar em qualquer anúncio de prêmio.",
-          "Desativar todas as atualizações.",
-          "Manter backups confiáveis e atualizações em dia."
-        ],
-        correct: 2
-      }
-    ];
+    /* SEARCH + FILTER */
+    const threatSearch=document.getElementById("threatSearch");
+    const threatCards=[...document.querySelectorAll(".villains .card")];
+    const filterButtons=[...document.querySelectorAll(".filter-btn")];
+    let activeFilter="all";
+    function filterThreats(){const term=(threatSearch?.value||"").toLowerCase().trim();let visible=0;threatCards.forEach(card=>{const show=(card.dataset.name||"").toLowerCase().includes(term)&&(activeFilter==="all"||card.dataset.type===activeFilter);card.classList.toggle("hidden-card",!show);if(show)visible++});const c=document.getElementById("threatCount");if(c)c.textContent=visible}
+    threatSearch?.addEventListener("input",filterThreats);filterButtons.forEach(btn=>btn.addEventListener("click",()=>{filterButtons.forEach(b=>b.classList.remove("active"));btn.classList.add("active");activeFilter=btn.dataset.filter;filterThreats()}));
 
-    let currentQuestion = 0;
-    let score = 0;
-    let quizLocked = false;
-
-    const questionText = document.getElementById("questionText");
-    const answersEl = document.getElementById("answers");
-    const feedbackEl = document.getElementById("quizFeedback");
-    const counterEl = document.getElementById("questionCounter");
-    const progressBar = document.getElementById("progressBar");
-    const quizArea = document.getElementById("quizArea");
-    const quizResult = document.getElementById("quizResult");
-    const quizShell = document.getElementById("quizShell");
-
-    function renderQuestion() {
-      quizLocked = false;
-      const q = questions[currentQuestion];
-
-      counterEl.textContent = `PERGUNTA ${currentQuestion + 1} DE ${questions.length}`;
-      progressBar.style.width = `${(currentQuestion / questions.length) * 100}%`;
-      questionText.textContent = q.question;
-      feedbackEl.textContent = "";
-      feedbackEl.className = "quiz-feedback";
-      answersEl.innerHTML = "";
-
-      q.answers.forEach((answer, index) => {
-        const button = document.createElement("button");
-        button.className = "answer";
-        button.textContent = answer;
-        button.onclick = () => answerQuestion(index, button);
-        answersEl.appendChild(button);
-      });
-    }
-
-    function answerQuestion(selected, selectedButton) {
-      if (quizLocked) return;
-      quizLocked = true;
-
-      const q = questions[currentQuestion];
-      const allButtons = [...answersEl.querySelectorAll(".answer")];
-
-      allButtons.forEach(btn => btn.disabled = true);
-
-      if (selected === q.correct) {
-        score++;
-        selectedButton.classList.add("correct");
-        feedbackEl.textContent = "✅ ACERTOU! Defesa digital +1!";
-        feedbackEl.className = "quiz-feedback good";
-        playTone(true);
-        quizShell.classList.add("quiz-flash");
-      } else {
-        selectedButton.classList.add("wrong");
-        allButtons[q.correct].classList.add("correct");
-        feedbackEl.textContent = "❌ Quase! A resposta correta ficou destacada em verde.";
-        feedbackEl.className = "quiz-feedback bad";
-        playTone(false);
-      }
-
-      setTimeout(() => {
-        currentQuestion++;
-        if (currentQuestion < questions.length) {
-          renderQuestion();
-        } else {
-          showQuizResult();
-        }
-      }, 1050);
-    }
-
-    function showQuizResult() {
-      progressBar.style.width = "100%";
-      quizArea.style.display = "none";
-      quizResult.style.display = "block";
-
-      const scoreText = document.getElementById("scoreText");
-      const rankText = document.getElementById("rankText");
-      const rankDescription = document.getElementById("rankDescription");
-      const medal = document.getElementById("medal");
-
-      scoreText.textContent = `${score} / ${questions.length} respostas certas`;
-
-      if (score === 3) {
-        medal.textContent = "🏆";
-        rankText.textContent = "Master Hacker do Bem";
-        rankDescription.textContent = "Você dominou os conceitos principais do treinamento!";
-      } else if (score === 2) {
-        medal.textContent = "🥈";
-        rankText.textContent = "Agente de Segurança";
-        rankDescription.textContent = "Boa! Você já reconhece várias ameaças digitais.";
-      } else {
-        medal.textContent = "🛡️";
-        rankText.textContent = "Recruta";
-        rankDescription.textContent = "Treinamento concluído! Continue aprendendo e você ficará cada vez melhor.";
-      }
-    }
-
-    function restartQuiz() {
-      currentQuestion = 0;
-      score = 0;
-      quizResult.style.display = "none";
-      quizArea.style.display = "block";
-      renderQuestion();
-      document.getElementById("quiz").scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    function playTone(correct) {
-      try {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContext) return;
-
-        const ctx = new AudioContext();
-        const oscillator = ctx.createOscillator();
-        const gain = ctx.createGain();
-
-        oscillator.type = "sine";
-        oscillator.frequency.value = correct ? 660 : 220;
-        gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.045, ctx.currentTime + 0.01);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.16);
-
-        oscillator.connect(gain);
-        gain.connect(ctx.destination);
-        oscillator.start();
-        oscillator.stop(ctx.currentTime + 0.17);
-
-        oscillator.addEventListener("ended", () => ctx.close());
-      } catch (e) {
-        // O quiz continua funcionando mesmo se o navegador bloquear áudio.
-      }
-    }
-
-    renderQuestion();
+    /* QUIZ — 36 PERGUNTAS, 3 DIFICULDADES, SORTEIO */
+    const questionBank={
+      facil:[
+        ["Um link pede sua senha com urgência. O que fazer?",["Clicar rapidamente.","Verificar o endereço e abrir o serviço por uma fonte oficial.","Enviar a senha para confirmar."],1],
+        ["Qual ameaça pode permitir acesso remoto não autorizado?",["RAT","Adware","Atualização oficial"],0],
+        ["Qual é uma boa defesa contra ransomware?",["Ignorar atualizações.","Manter backups confiáveis e atualizar o sistema.","Clicar em anúncios de prêmio."],1],
+        ["O que é phishing?",["Um tipo de golpe que tenta enganar para obter informações.","Um cabo de rede.","Uma atualização do navegador."],0],
+        ["O que fazer com um arquivo de origem desconhecida?",["Abrir para descobrir.","Enviar para amigos.","Não abrir e verificar a origem."],2],
+        ["Para que serve o 2FA?",["Adicionar uma camada extra de autenticação.","Deixar a internet mais rápida.","Aumentar o brilho."],0],
+        ["O Adware é conhecido por...",["Exibir anúncios indesejados.","Fazer backup automaticamente.","Aumentar a memória RAM."],0],
+        ["Um backup ajuda principalmente a...",["Recuperar dados depois de um incidente.","Criar senhas.","Bloquear todos os sites."],0],
+        ["Qual atitude é mais segura?",["Usar a mesma senha em tudo.","Usar senhas únicas e proteção adicional.","Compartilhar códigos."],1],
+        ["Um pop-up diz 'seu PC está infectado, clique agora!'. O melhor é...",["Clicar imediatamente.","Verificar com uma ferramenta de segurança confiável.","Passar dados pessoais."],1],
+        ["Onde é melhor baixar um aplicativo?",["De fonte confiável e conhecida.","De qualquer anúncio.","De um link aleatório."],0],
+        ["Por que atualizações de segurança são importantes?",["Corrigem problemas e vulnerabilidades conhecidas.","Deixam todas as senhas iguais.","Desligam a internet."],0]
+      ],
+      medio:[
+        ["Uma mensagem do 'banco' manda clicar em um link urgente. Qual atitude é mais segura?",["Usar o link.","Abrir o aplicativo/site oficial por conta própria.","Responder com sua senha."],1],
+        ["Qual combinação descreve melhor um RAT?",["Acesso remoto não autorizado + malware.","Anúncio normal + navegador.","Backup + antivírus."],0],
+        ["Qual é uma característica de um worm?",["Pode se espalhar entre sistemas de forma mais autônoma.","Só funciona como anúncio.","É sempre uma ferramenta oficial."],0],
+        ["Por que um rootkit pode ser difícil de investigar?",["Porque tenta esconder sua presença ou componentes.","Porque aparece em letras gigantes.","Porque é um backup."],0],
+        ["Um navegador mudou a página inicial sem você pedir. Qual ameaça pode estar relacionada?",["Hijacker.","Backup.","Firewall físico."],0],
+        ["Qual ameaça tenta registrar teclas digitadas?",["Keylogger.","Wiper.","Worm."],0],
+        ["Um alerta assustador exige pagamento para 'limpar' o computador. Qual é um sinal?",["Pode ser scareware.","É prova de uma infecção real.","É uma atualização normal."],0],
+        ["Um programa usa muita CPU sem motivo aparente. Qual ameaça pode ser uma possibilidade?",["Cryptojacker.","Impressora.","Cabo HDMI."],0],
+        ["Qual é a diferença geral entre vírus clássico e worm?",["Vírus costuma depender de um hospedeiro; worm é mais autônomo.","São exatamente a mesma coisa.","Worm é sempre um anúncio."],0],
+        ["Por que baixar software apenas de fontes confiáveis ajuda?",["Reduz a chance de instalar software adulterado ou malicioso.","Garante 100% de segurança.","Aumenta a internet."],0],
+        ["Qual ação ajuda a limitar o impacto de um wiper?",["Ter backups confiáveis e separados.","Desligar o monitor.","Clicar em pop-ups."],0],
+        ["Um dropper geralmente tem qual função?",["Entregar ou instalar outro malware.","Criar backups.","Corrigir o sistema."],0]
+      ],
+      dificil:[
+        ["Qual afirmação diferencia melhor um dropper de um stealer?",["Dropper pode entregar outro malware; stealer tenta coletar informações.","São exatamente a mesma coisa.","Stealer é sempre antivírus."],0],
+        ["Por que um resultado limpo no VirusTotal não é garantia absoluta?",["Ferramentas têm limitações e ameaças novas podem não ser reconhecidas.","O site nunca analisa nada.","Qualquer arquivo é automaticamente seguro."],0],
+        ["Qual cenário combina mais com uma bomba lógica?",["Uma ação maliciosa condicionada a um evento.","Um anúncio aleatório.","Um backup programado."],0],
+        ["Qual defesa é especialmente importante contra ransomware e wipers?",["Backups confiáveis, testados e separados.","Usar a mesma senha em tudo.","Desativar atualizações."],0],
+        ["Um malware tenta permanecer escondido e manter acesso. Qual categoria combina melhor?",["Rootkit.","Adware.","Scareware."],0],
+        ["Uma botnet é melhor descrita como...",["Uma rede de dispositivos comprometidos controlados para ações coordenadas.","Um backup em nuvem.","Uma lista de senhas oficiais."],0],
+        ["Por que 2FA ajuda contra roubo de senha?",["Adiciona uma segunda etapa além da senha.","Torna a senha pública.","Impede qualquer malware."],0],
+        ["Qual cenário é mais compatível com um browser hijacker?",["O navegador redireciona buscas e muda configurações sem autorização.","O computador recebe atualização oficial.","O usuário troca o papel de parede."],0],
+        ["Qual afirmação sobre scareware é mais correta?",["Ele usa medo e urgência para pressionar a vítima.","Todo alerta vermelho é verdadeiro.","Scareware é firewall."],0],
+        ["Um cryptojacker tenta obter benefício principalmente usando...",["Recursos computacionais do dispositivo para mineração não autorizada.","A câmera para fotos.","Backups."],0],
+        ["Qual estratégia reduz a chance de cair em phishing?",["Verificar o domínio e acessar o serviço por um caminho oficial.","Clicar mais rápido.","Responder com a senha."],0],
+        ["Qual princípio é mais importante ao analisar uma ameaça desconhecida?",["Evitar executar ações arriscadas e buscar informação em fontes confiáveis.","Testar no computador principal.","Desativar a proteção."],0]
+      ]
+    };
+    const difficultyInfo={facil:"Perguntas introdutórias para começar o treinamento.",medio:"Situações práticas e conceitos intermediários.",dificil:"Conceitos mais avançados e comparação entre ameaças."};
+    let difficulty="facil",quizQuestions=[],currentQuestion=0,score=0,streak=0,bestStreak=0,quizLocked=false;
+    const questionText=document.getElementById("questionText"),answersEl=document.getElementById("answers"),feedbackEl=document.getElementById("quizFeedback"),counterEl=document.getElementById("questionCounter"),progressBar=document.getElementById("progressBar"),questionTag=document.getElementById("questionTag"),streakText=document.getElementById("streakText"),quizArea=document.getElementById("quizArea"),quizResult=document.getElementById("quizResult"),quizShell=document.getElementById("quizShell"),questionCount=document.getElementById("questionCount");
+    function shuffle(a){const c=[...a];for(let i=c.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[c[i],c[j]]=[c[j],c[i]]}return c}
+    function startQuiz(){const n=Number(questionCount.value);quizQuestions=shuffle(questionBank[difficulty]).slice(0,Math.min(n,questionBank[difficulty].length));currentQuestion=0;score=0;streak=0;bestStreak=0;quizLocked=false;quizResult.style.display="none";quizArea.style.display="block";renderQuestion()}
+    function renderQuestion(){quizLocked=false;const q=quizQuestions[currentQuestion];counterEl.textContent=`PERGUNTA ${currentQuestion+1} DE ${quizQuestions.length}`;questionTag.textContent=`QUESTÃO ${String(currentQuestion+1).padStart(2,"0")}`;progressBar.style.width=`${currentQuestion/quizQuestions.length*100}%`;questionText.textContent=q[0];feedbackEl.textContent="";feedbackEl.className="quiz-feedback";streakText.textContent=`🔥 Sequência: ${streak}`;answersEl.innerHTML="";shuffle(q[1].map((text,index)=>({text,index}))).forEach(item=>{const b=document.createElement("button");b.className="answer";b.textContent=item.text;b.onclick=()=>answerQuestion(item.index,b);answersEl.appendChild(b)})}
+    function answerQuestion(selected,button){if(quizLocked)return;quizLocked=true;const q=quizQuestions[currentQuestion],all=[...answersEl.querySelectorAll(".answer")];all.forEach(b=>b.disabled=true);if(selected===q[2]){score++;streak++;bestStreak=Math.max(bestStreak,streak);button.classList.add("correct");feedbackEl.textContent="✅ ACERTOU! Defesa digital +1!";feedbackEl.className="quiz-feedback good";playTone(true);quizShell.classList.add("quiz-flash");setTimeout(()=>quizShell.classList.remove("quiz-flash"),500)}else{streak=0;button.classList.add("wrong");all.forEach(b=>{if(b.textContent===q[1][q[2]])b.classList.add("correct")});feedbackEl.textContent="❌ Quase! A resposta correta ficou destacada em verde.";feedbackEl.className="quiz-feedback bad";playTone(false)}streakText.textContent=`🔥 Sequência: ${streak}`;setTimeout(()=>{currentQuestion++;currentQuestion<quizQuestions.length?renderQuestion():showQuizResult()},900)}
+    function showQuizResult(){progressBar.style.width="100%";quizArea.style.display="none";quizResult.style.display="block";const pct=Math.round(score/quizQuestions.length*100),medal=document.getElementById("medal");document.getElementById("scoreText").textContent=`${score} / ${quizQuestions.length} respostas certas • ${pct}%`;const rank=document.getElementById("rankText"),desc=document.getElementById("rankDescription");if(pct>=85){medal.textContent="🏆";rank.textContent="Master Hacker do Bem";desc.textContent=`Excelente desempenho no nível ${difficulty}. Melhor sequência: ${bestStreak}.`}else if(pct>=60){medal.textContent="🥈";rank.textContent="Agente de Segurança";desc.textContent=`Muito bom! Continue treinando para dominar o nível ${difficulty}.`}else{medal.textContent="🛡️";rank.textContent="Recruta";desc.textContent="Treinamento concluído. Revise os cards e tente novamente!"}}
+    function restartQuiz(){startQuiz();document.getElementById("quiz").scrollIntoView({behavior:"smooth",block:"start"})}
+    document.querySelectorAll(".difficulty").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".difficulty").forEach(b=>b.classList.remove("active"));btn.classList.add("active");difficulty=btn.dataset.difficulty;document.getElementById("difficultyDescription").textContent=difficultyInfo[difficulty];startQuiz()}));questionCount.addEventListener("change",startQuiz);startQuiz();
 
     /* =========================
        MISSÃO
